@@ -1,0 +1,40 @@
+{
+  "generator-jhipster": {
+    "applicationType": "monolith",
+    "authenticationType": "jwt",
+    "baseName": "CtrlProdNew",
+    "buildTool": "maven",
+    "cacheProvider": "ehcache",
+    "clientFramework": "angular",
+    "clientTheme": "cyborg",
+    "clientThemeVariant": "dark",
+    "creationTimestamp": 1792353901481,
+    "databaseType": "sql",
+    "defaultCommand": "app",
+    "devDatabaseType": "postgresql",
+    "enableHibernateCache": true,
+    "enableTranslation": true,
+    "entities": [],
+    "feignClient": null,
+    "jhipsterVersion": "9.4.0",
+    "jwtSecretKey": "ZWViMDJlNDNmOGJiMmE1N2E5YTQ5MDZlOWQyYzQ0NzE4NWM3NDljZDhhYWE0MGVlYjgyNTcyZjk3OTU5MjkxZmUzZjM2OTdiYTI3ZGIxNGJmYTNjNGQwNzNmYjVhOWM1NjBlMzMwMjA2NGJiYWVlYTI0OTUzY2VjYmJlZjQ2OGQ=",
+    "languages": ["es"],
+    "microfrontend": null,
+    "microfrontends": [],
+    "monorepository": true,
+    "nativeLanguage": "es",
+    "packageName": "com.findotechnet",
+    "prodDatabaseType": "postgresql",
+    "promptValues": {
+      "nativeLanguage": "es"
+    },
+    "reactive": false,
+    "serverPort": null,
+    "serviceDiscoveryType": null,
+    "skipCommitHook": true,
+    "syncUserWithIdp": null,
+    "testFrameworks": [],
+    "websocket": "spring-websocket",
+    "withAdminUi": true
+  }
+}

@@ -1,0 +1,11 @@
+ignorar lineas que comiencen con caracteres que representen comentarios en distintos lenguajes, ejemplo #, --, //, etc
+
+# update en dialog
+hacer que el componente update sea un dialog como el delete de la [ENTIDAD]
+el titulo de crear y editar tienen que ser distindos
+los botones que queden a la derecha
+agregar nargenes superior e inferior de al menos 1rem que sea una clase css en global.scss
+aplicar que se abra el dialog desde detail y la lista de la [ENTIDAD]
+
+NO MODIFIQUES OTRO COMPONENTE DE LA [ENTIDAD]
+NO CAMPILES

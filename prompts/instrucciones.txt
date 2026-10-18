@@ -1,0 +1,5 @@
+Instruccion de uso:
+reemplazar:
+  [NombreEntidad] --> Nombre de la entidad con camel. Ej: TipoCentroAtencion]
+  [NOMBRE_ENTIDAD] --> Nombre de la entidad con camel. Ej: TipoCentroAtencion]
+  tipo-centro-atencion --> Nombre de la entidad tipo angular. Ej: tipo-centro-atencion]

@@ -1,0 +1,7 @@
+ignorar lineas que comiencen con caracteres que representen comentarios en distintos lenguajes, ejemplo #, --, //, etc
+
+# creacion
+los literales definilos en Constants.java
+en [ENTIDAD]QueryService.java agregar metodos para obtener el estado inicial y el estado cancel por medio del codigo, 
+defini un cache para la entidad y la clave por el estado literal
+la idea es poder usar esos metodos pero que no los busque da la BD mas de una vez opr dia

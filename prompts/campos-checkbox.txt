@@ -1,0 +1,9 @@
+ignorar lineas que comiencen con caracteres que representen comentarios en distintos lenguajes, ejemplo #, --, //, etc
+
+# cambio de str a chkbx
+en la pantalla de update de la [ENTIDAD] reemplazar la [COLUNA] por un checkbox
+el valor de la [COLUNA] debe ser "SI" para true y "NO" para false
+los strings "SI" y "NO" generarlas como constantes, abtes de crearlos verifica si en constants.ts existe
+
+en los campos checkbos que se representan con un SI o un NO
+si no los checkeo el form queda invalido porque es como si no tuiviera valor

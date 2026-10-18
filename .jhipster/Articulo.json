@@ -1,0 +1,69 @@
+{
+  "changelogDate": "20220414004839",
+  "dto": "no",
+  "fields": [
+    {
+      "fieldName": "descArt",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "maxlength"],
+      "fieldValidateRulesMaxlength": "500"
+    },
+    {
+      "fieldName": "recetaArt",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "65000"
+    },
+    {
+      "fieldName": "unidadGenerarArt",
+      "fieldType": "Float",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": 0
+    },
+    {
+      "fieldName": "mermaPreparacionArt",
+      "fieldType": "Float",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": 0
+    },
+    {
+      "fieldName": "pesoArt",
+      "fieldType": "Float",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": 0
+    },
+    {
+      "fieldName": "presentacionCompraArt",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": 0
+    },
+    {
+      "fieldName": "valorPresentacionArt",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": 0
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Articulo",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "descUni",
+      "otherEntityName": "unidad",
+      "relationshipName": "unidadPresentacionArt",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "descTpArt",
+      "otherEntityName": "tipoArticulo",
+      "relationshipName": "tipoArt",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    }
+  ],
+  "service": "serviceClass"
+}

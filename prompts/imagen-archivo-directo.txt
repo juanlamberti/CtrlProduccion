@@ -1,0 +1,14 @@
+ignorar lineas que comiencen con caracteres que representen comentarios en distintos lenguajes, ejemplo #, --, //, etc
+
+# IMAGEN ASOCIADA EN TABLA
+/home/juan/desarrollo/projects/petConnect/petConnect/src/main/webapp/app/entities
+en el archivo [ENTIDAD]/list, cuando se haga click en el nombre de la imgen mostrar la imagen en un dialog
+en el archivo [ENTIDAD]/detail, cuando se haga click en el nombre de la imgen mostrar la imagen en un dialog
+
+en el archivo [ENTIDAD]/update
+cuando se haga click en el nombre de la imgen mostrar la imagen en un dialog
+poder seleccionar el archivo y cargarlo en la entidad Archbivo
+en el dialog descargar La imagen mediante ArchivoService
+
+validar el alto y el ancho de la imagen anbtes de grabarla en la tabla
+el alto no puede exceder los 300px

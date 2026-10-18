@@ -1,0 +1,30 @@
+en [Entidad].java quita la implementacion de Serialized y extende con AbstractAuditingEntity<Long> el id que sea generado desde una secuencia definida en el archivo de definicion de liquibase
+en [Entidad]Criteria reemplazar las implementaciones de serlializable y Criteria con la extendension con AbstractCriteria, agregar en el toString el super.toString() al final
+en [Entidad]QueryService crea un metodo createSpecificationSearch similar a createSpecification
+utilizar getSearch de [Entidad]Criteria para buscar por los campos codigo, desc
+en [Entidad]QueryService crea un metodo searchByCriteria similar a findByCriteria  que llame createSpecificationSearch
+en un and agregar las especificaciones de createSpecification
+en [Entidad]Resource agrega un endpoint /search (searchAll[Entidad]) similar a getAll[Entidad] que llame a searchByCriteria
+
+en el frontend no modifiques los tests si no lo pido espcificamente
+a las pantallas y la modal de delete de la entidad [Entidad] en el path: /home/juan/desarrollo/projects/petConnect/petConnect/src/main/webapp/app/entities/|
+agregar un icono de asterisk en el titulo
+hacer que el icono se pueda cambiar desde un solo lugar
+en la pantalla de update y detail, ocultare el ID
+en el modal de delete usar el atributo desc
+en la pantalla de lista cambiar la columna ID por la del co0digo, manteniendo el link para ingresar a detail con codigo
+en el servicio [entidad].service.ts, path /home/juan/desarrollo/projects/petConnect/petConnect/src/main/webapp/app/entities/[entidad]/service
+agregar la llamada al endpoint [entidad]/search
+en la pantalla de la lista de [entidad], path /home/juan/desarrollo/projects/petConnect/petConnect/src/main/webapp/app/entities/[entidad]/list
+con formgroup, agrega un campo, debajo del titulo, para filtrar con el metodo search con un debounce de 300ms,
+agrega un boton para limpiar filtros a la derecha del campo de busqueda con el icono filter-circle-xmark separado por un espacio (&nbsp;), separarlo un poco, el label que sea "Limpiar" tomalo de global.json
+al campo agrega un icono a la izquierda con una lupita y un icono a la derecha para limpiarlo, este icono solo que aparezca cuando hay contenido en el campos
+hace que el valor ingresado quede guardado como un atributo en la clase [Entidad]Service
+el filtro llama al metodo search del [entidad]-service.ts
+no pongas literales en los templates crea las entradas en los json de i18n
+si el icon ono esta importalo en el archivo /home/juan/desarrollo/projects/petConnect/petConnect/src/main/webapp/app/config/font-awesome-icons.ts
+en la etiqueta del boton limpiar filtros creala en global.json, el resto en el json de la entidad
+
+
+NO COMPILES
+SI NO ENTENDES A QUE ENTIDAD SE REFIERE PREGUNTA

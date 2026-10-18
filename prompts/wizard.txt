@@ -1,0 +1,21 @@
+ignorar lineas que comiencen con caracteres que representen comentarios en distintos lenguajes, ejemplo #, --, //, etc
+
+# creacion de wizard
+en /home/juan/desarrollo/projects/petConnect/petConnect/src/main/webapp/app/functionalities/suscripciones
+necestio armar una szecuencioa de patnallas para inscribir personas, mascotas de esas personas, chapita de la mascota
+arma un componente para hacer un wizard con los pasos, cada paso es una pantasllaa, arriba en el centro pone una linea con bolitas 
+tanto las imagenes como las caracteristicas de lAS MAScotas no son obligatorias
+
+
+
+# agregar imagenes
+reutilizando los componentes de la entidad
+agregar al wizard de mascota (/src/main/webapp/app/functionalities/dueno-wizard) el paso para las imagenes, 
+es 2 pasos, el primero para la imagen principal (tipoImgMas === 'PRINCIPAL'), mostrar la imagen cuando se la carga
+despues en otro paso las imagenes secundarias (tipoImgMas === 'OTROS')
+al presionar el boton de edicion de mascota permitir editar la imagen principal
+mostrar la imagen principal
+
+
+en el wizard de mascota (/src/main/webapp/app/functionalities/dueno-wizard)
+mostrar la imagen principal al ediutar los datos de la mascota

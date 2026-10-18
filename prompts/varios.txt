@@ -1,0 +1,252 @@
+ignorar lineas que comiencen con caracteres que representen comentarios en distintos lenguajes, ejemplo #, --, //, etc
+
+# WELCOME CA
+para los centros de atencion armar un componente crea un component que se llame welcome_ca en 
+/home/juan/desarrollo/projects/petConnect/petConnect/src/main/webapp/app/functionalities,
+toma el diseño de /home/juan/desarrollo/projects/petConnect/petConnect/docs/inicio_ca.html
+agrega ese componente al componente home, solo que se muestre a los usuiarios con role ADMIN_CA
+saca el terracota y ponelo verde pone azul en los bordes y las letras las barras de los charts en la gama de azul, pero un poco mas claro
+
+hace que la pantalla welcome_ca tenga un fondo mas claro, y en tonos terracota poner una card a la derecha con la imagen principal del CA
+la pantalla welcome_ca tiene que mostrarse solo para los usaurios con role ROLE_CENTRO_ATENCION
+en la card con los datos del petshop pone un avatar si no tiene imagen prinicipal con una invitacion a cargar la imagen
+en la card del CA agrega los servicios, todos de corrido separados por un guicon y espácios, si no tiene agrega una invitacion a cargarlos
+en la card del CA agrega los medios de comunicacion, debajo de los servicios, como una lista con la imagen definica como icono, si no tiene agrega una invitacion a cargarlos
+en la card del CA agrega un boton para editar los datos del CA con el wizard, en la esquina superior derecha, como una pildora con la palabra editar y el icono de un lapiz
+
+conecta los datos de las promociones activas con la BD, pone un boton de editarlas a la derecha del titulo
+sin cambiar el UI/UX mostra 4 promociones y el resto hace que sea un carrousel y agregle botones para navegar a la derecha e izquierda, y pone unos botoncitos en el centro 
+sin cambiar el UI/UX hace que las se muestren como un carrousel que sea como si fuera un scroll 
+el fondo del dialog del wizard tiene que ser var(--wizard-blue-soft)
+en la card del CA hace que el boton de editar imagen valla al ImagenCentroAtencionUpdateComponent
+
+conecta los datos de las denuencias que trengan relacoin con las mascotas de los duieños conectados a este CA
+en la pantalla welcome_ca en la card del CA hace que los botones sobre la imagen esten medio transparentes y cuando el mouse se ponga encima se iluminen
+
+en la pantalla welcome_ca agrega una seccion con los venciminetos de las vacunas de las mascotas de dueños que tienen relacion con el CA
+
+en la pantalla welcome_ca
+agrega una seccion arriba de los turnos con las solicitudes de los tag
+en la lista poner el nombre del dueño, el nombre de la mascota y el codigo del tag
+en cada campo poner un tooltip muyh cheto con los datos restantes de cada columna
+agrega un boton para cancelarla
+agrgar uyn boton para el siguiente estado
+tomar los colores de ambos botopnes de la tabla de estadoTag
+si la solicitud no tiene el tag asignado, desactivar el boton de activar y poner un tooltip
+crear un dialogo de confirmacion de la cancelacion al presionar el botno cancelar
+filtrar las solicitudes canceladas
+
+en la pantalla welcome_ca
+dividi en componentes cada cosa
+el template que sea un archivo separado del controller
+no olvidar de importar el style de welcome_ca
+promociones
+cada uno de los graficos
+solcitud de tag
+turnos
+vacunas
+card de CA
+horarios
+no cambies nada mas
+mascotas perdidas / encontradas
+
+
+cuando el usuario tiene authority ROLE_
+oculta el menu
+en la pantalla welcome_ca conectalo con los datos
+
+
+# turnos
+en el componente welcome_ca, agrega una seccion con los turnos a la izquierda de la card de los datos del CA
+mostralo como en welcome_owner
+EL BOTON "ver turnos" deberia llamar a una pantalla similar a la solicitud de turnos de la mascota pero orientada al CA, seleccionando las mascotas que tengan un dueño vinculado a es
+los charts #nuevas mascotas..." "Notificaicones enviadas..." y "Vacunas prox..." que esten en una sola linea debajo de los otros charts y de los turnos
+hace que los turnos escrolen en ese espacio
+
+
+
+en el componente welcome_ca, agrega una seccion de turnos a la derecha de la card de los datos del centro de atencion
+agraga un boton de configuracion de la disponibilidad, usa disponibilidad y excepciones
+ordena los dias de la semana de lunes a domingo
+
+en el componente welcome_ca, agrega una seccion de turnos a la derecha de la card de los datos del centro de atencion
+agraga un boton de configuracion de la disponibilidad, usa disponibilidad y excepciones
+ordena los dias de la semana de lunes a domingo
+
+
+# CHARTS CA
+en la pantalla welcome_ca agregar estos charts con datos mock
+Notificaciones enviadas vs. leídas
+Nuevas mascotas registradas en el tiempo
+% de dueños que interactúan con la app en los últimos 30 días
+
+Turnos agendados por semana/mes (línea de tendencia)
+
+
+#conecta los datos de los charts que tengan relacion con las mascotas de los duieños conectados a este CA
+
+en la card del CA las imagenes del CA hacerlas un carrousel con botoncitos abajo para navegar y quie aparezcan botones a la derecha y a la izquierda sobre la imaagen al medio de la altura
+agrega un boton flotante en la esquina inferior izquierda de la imagen para agregar mas y anda a la pantalla de ImagenetCentroAtencionComponente modo dialog
+hace que cuando se cierre cualquier dialog de edicion se actualicen los datos de la pantalla
+en la pantalla de welcome_ca hace que todos los literales sean de i18n
+
+
+# wizard CA
+armar un componente wizard para el CA, en functionalities,
+reutilizar los componentes quer existen de las entidades,
+armarlo de manera que se pueda cambiar el orden facilmente
+primer paso los datos del CA
+segundo paso los medios de comunicacion con el componente MedioComunicacionCentroAtencionUpdateLista
+tercerpaso paso los medios de comunicacion con el componente ServicioCentroAtencionUpdateLista
+hace que en el wizar del CA se pueda navegar entre los pasos, mas alla de si tienen datos o no
+hacer que el wizard de CA sea un dialog
+transforma la edicion de las promociones a dialog
+transforma la edicion de las imagenes del CA a dialog
+
+en la edicion de las imagenes del CA a dialog, pone un radiobutton para el tipo con las opciones principal y otros
+
+oculta el centro de atencion en los dialogs de edicion de las entidades hgijas cuando se edita desde el wizard o el usuario no tiene role ROLE_CENTRO_ATENCION
+
+
+
+
+
+
+
+# Ocultar bienvenida usr conectado 
+en el componente home
+hace que el mensaje de bienvenida del usuario conectado, desaparezca despues de unos segundos
+que muestre ese mensaje solo la primera vez, despues de loguearse
+
+EN EL COMPONETNE home
+los divs de inicio  y crear cuenta, ponerlos en la top bar, como botones a la derecha
+
+en el componente login
+hace que los links de olvisdaste password y crear cuenta sean botones como el iniciar loghin
+
+# User Management
+los usuarios con perfil administrador pueden REINICIAR LA CONTRASEÑA DE UN USUARIO
+ AGREGA UN BOTON PARA hacer que la password sea igual al login en la list de user-management
+
+
+# PANTALLA SERVICIOS CA LISTA
+# creacion
+crear una pantalla en Servicios Centro Atencion, como un nuevo componente en la ruta /home/juan/desarrollo/projects/petConnect/petConnect/src/main/webapp/app/entities/servicio-centro-atencion/update-lista
+tiene que tener la lista de todos los tipos de servicios definidos
+es una lista de los siguientes campos
+Tipo MC         ¿Habilitar?         Dato MC             Obs MC
+no editable     Editable checkbox   Editable checkbox   editable
+para los checkbox aplicar lo que dice el archivo prompts/campos-checkbox.txt
+cuando se persista los campos de checkbox son requeridos por SI o por NO
+
+incluir esta pantalla en la pantalla detail de centro de atencion
+
+
+
+
+# aplicar un lookup
+en el archivo [ENTIDAD]/update reemplazar el select de [ENTIDAD LOOJUP] por el lookup de [ENTIDAD LOOJUP]
+
+# varios de CA
+necesito poder editar el cmapo descProCenAt en varias lineas
+
+
+# fromato de las fechas
+hace que en TODOS los campos de fechas el formato sea dd/MM/yyyy
+
+# pantaslla de reincio contraseña
+agregar un boton de cancelar a la izquioerda del pantalla de cambio de contraseña, tiene que volver al home
+
+
+#MODIFICAR MENU
+#nuevo menu customizacion
+arma un nuevo menu Customization
+pone ahi todas las entidades Tipo...
+los literales agregalos en los json de i18n
+el menu solo lopuede ver el perfil ADMIN
+
+# menu a la izquierda
+hacxer que la seccion del menu seas una barra vertical a la izquierda
+que se pueda achicar mostrando unicamente los iconos
+cuando activo un menu mostrar la barra completa mientras este el foco del mouse
+oculat los submenues se pierda elñ foco
+sacar los iconos de flechita a la derecha del label del menu
+resaltar el menu activo
+
+# barra con informacion o top-bar
+agregar una seccion arriba de todo, con el usuario activo a la izquierda la fecha y la hora a la derecha
+a la derecha de la hora agrega un icono para hacer logout
+usa el mismo fondo y color de letras de la barra de navegacion
+agrega el nombre de la aplicacion a la izquierda como esta en el menu cuando el menu esta minimizado mostra 
+agrega el numero de version y quitalo del menu
+agrega a la izquierda del icono del usuario activo un icono de home solo cuando haya una sesion activa
+oculta el usuario activo cuando no este iniciada la sesion
+mostra el nombre de la aplicacion cuando no haya sesion activa
+en la seccion de arriba agregar un boton para editar cambiar la contraseña y si se graba correctametne volver al inicio, asegurar que se muestre el mensaje de cambio de contraseña cprrecta
+
+
+
+# NAVEGACION O FUINCIONALIDADES SIN MENU
+al dashboard de mascotas agregar un icono con un lapiz para editar la mascota
+navegar a la edicion de mascota con el ID que coresponde
+el boton de agregar mascota navega a new-wiz
+
+reutilizando el wizard de dueños permitir dar de alta nuevas mascotas unicamente, el dueño se lo toma a partir del usuario activo
+unicametne si el usuairo activo tiene perfil de DUEÑO_MASCOTA
+
+
+hacer que el componente de MascotaUpdate se muestre en un dialog
+poner en una linea y en ese orden, raza especie
+poner en una linea fecha de nacimineto y sexo
+hacer que sexo sea una lissta de radio buttons con las opciones Hembra y Macho
+el boton de edicion de mascota en welcome_owner no permite editar la mascota activa
+ocultar el dueño cuando se edita con un usuario con role_mascota_owner
+
+
+
+
+
+
+# VACUNAS
+hacer lo que dice el archivo prompts/filtro-entidad.txt en las entidades PlanVacunacion y VacunaPlanVacunacion
+hacer lo que dice el archivo prompts/campos-checkbox.txt en la entidad PlanVacunacion con la columna vigenteSNPlaVac
+hacer lo que dice el archivo prompts/campos-checkbox.txt en la entidad VacunaPlanVacunacion con la columna obligatoriaSNVacPV
+hacer lo que dicen los archivos prompts/dialog-detail-entidad.txt y prompts/dialog-update-entidad.txt en las entidades PlanVacunacion y VacunaPlanVacunacion
+
+
+
+# IMAGENES EN UPDATE DE ENTIDAD
+en el componente TipoServicioCentroAtencionUpdate
+hace que se cargue el icono directametne desde la poatnalla
+mostra la imagen a la derecha de los campos
+
+
+# solicitud de tag
+poner un boton en la patnalla de welcome_ca para generar un pedido de tag para una mascota
+ubicarla arriba de la columna de turnos que quede fuera de la caja de los turnos y centrado en esa columnas
+
+genera un componente, con estilo wizard, para generar la solicitud, reutilizar componentes existentes
+debe seguir la logica siguiente
+1 seleccionar al dueño, o darlo de alta
+2 seleccionar la mascota, o darla de alta
+3 solicitar el tipo, mostrar los tipos 
+4 solicitar el numero de chip
+
+si doy de alta un dueño tomar el centro de atencion del usuario activo
+el plan del dueño mostrarlo como radio button y tomar el plan basico por default
+la pantalla de alta de dueño no se pued ever los boitons de atras y siguiente
+
+en el paso de la mascota, cuano la estoy dando de alta ocultar el cmpo de tag
+
+los datos guardarlos en memoria y grabar todo junto
+permitir navegar entre los pasos, haciendo click en los numeros
+el numero de chip es opcional tanto en el alta de la mascota como en el ultimo paso
+el dato del codigo del chip si se ingresa desde el paso de mascota mostrarlo en el ultimo paso
+
+poara los literales utilizar i18n
+CUANDO SE GRABe la solicitud hacerlo con un solo endpoint que reciba todos los datos juntos
+
+
+
+en tagrequestwizard hay que utilizar las entidades TagRequest, EstadoTagRequest y TagRequestLog
+

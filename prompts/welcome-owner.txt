@@ -1,0 +1,25 @@
+ignorar lineas que comiencen con caracteres que representen comentarios en distintos lenguajes, ejemplo #, --, //, etc
+
+# WELCOME Dueños
+para los dueños de mascotas armar un componente que se llame welcome_owners en 
+/home/juan/desarrollo/projects/petConnect/petConnect/src/main/webapp/app/functionalities,
+toma el diseño de /home/juan/desarrollo/projects/petConnect/petConnect/docs/welcome_owners.html
+agrega ese componente al componente home, solo que se muestre a los usuiarios con role DUEÑO_MASCOTA
+en la card de la mascota donde esta el avatar, mostra la imagen de la mascota con tipoImgMas === 'PRINCIPAL'
+hace que la imagen mantenga el aspect-ratio pero sde muestre completa
+
+en welcome_owners mostrar las promociones del CA especificado en el dueño
+que esa seccion sea un componente tipo carrousel para mostrar las promociones ordenadas por fecha de fin primero nulls last
+que el carrousel este animado y que vayan pasando las promos
+la seccion debe estar a la izquierda del centro de atencion 
+ocultar la seccion si el centro no tiene promociones
+
+en welcome_owners en la card de la mascota
+mostrar primero la imagen principal y luego las otras en orden de carga, mostrar unos botoncitos en la parte inferior
+mostrar botones para mostrar las otras imagens en el centro de la imagen en los margenes derecho e izquierda
+agregar un boton para agregar imagenes, mostrar un dialog con el componetne Mascota, filtrando las imagenes de la mascatoa activa
+
+
+en welcome_owners a la izquierda del boton editar 
+mostrar el numero de paso actual y el maximo del wizard en rojo si el paso es cero o 1 y amarillo si ya tiene una mascota y verde cuando este completo
+el boton editar navega al wizard de dueño si no esta completo y se posiciona en el ultimo numero guardado

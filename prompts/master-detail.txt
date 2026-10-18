@@ -1,0 +1,7 @@
+en src/main/webapp/app/entities/[ENTIDAD]/detail dividi en 2 la pantalla
+a la izquierda queda los datos de la [ENTIDAD]
+reutilizando las pantallas ya creadas de las entidades hijas
+a la derecha agrega la lista de las entidades hijas, si hay mas de una hacelo con tabs
+ocultar el campo de la entidad padre y heredarlo de la pantalla
+ocultar el campo del codigo de la pantalla
+

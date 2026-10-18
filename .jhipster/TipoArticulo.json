@@ -1,0 +1,18 @@
+{
+  "changelogDate": "20220414194007",
+  "dto": "no",
+  "fields": [
+    {
+      "fieldName": "descTpArt",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "maxlength"],
+      "fieldValidateRulesMaxlength": "100"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "TipoArticulo",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceClass"
+}

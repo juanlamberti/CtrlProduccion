@@ -1,0 +1,18 @@
+{
+  "changelogDate": "20220414195026",
+  "dto": "no",
+  "fields": [
+    {
+      "fieldName": "descUni",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "maxlength"],
+      "fieldValidateRulesMaxlength": "100"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Unidad",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceClass"
+}

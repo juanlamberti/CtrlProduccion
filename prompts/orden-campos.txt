@@ -1,0 +1,7 @@
+ignorar lineas que comiencen con caracteres que representen comentarios en distintos lenguajes, ejemplo #, --, //, etc
+
+# ejemplo
+en el componente estadonotificacionupdate quiero acortar el largo de la pantalla
+poner en la primer linea el codigo, la descripcion y la accion pone mas chico el codigo y la accion
+en la segunda linea pone orden, color y el lookupo de estados
+en la tercera los checkbox

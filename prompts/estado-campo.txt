@@ -1,0 +1,15 @@
+ignorar lineas que comiencen con caracteres que representen comentarios en distintos lenguajes, ejemplo #, --, //, etc
+
+los metodos en comun que sean necesarios crealos en la clase del estado que corresponda
+
+# creacion
+en la pantalla list de la [ENTIDAD]
+el estado de cada registro mostralo con el color definido en la tabla
+como una pill
+que el color de las letras sea blanco o negro dependiendo de la claridad del color 
+
+
+en la pantalla detail de la [ENTIDAD]
+el estado mostralo con el color definido en la tabla
+como una pill
+que el color de las letras sea blanco o negro dependiendo de la claridad del color 

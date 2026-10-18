@@ -1,0 +1,38 @@
+{
+  "changelogDate": "20220414184204",
+  "dto": "no",
+  "fields": [
+    {
+      "fieldName": "cantidadPed",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": 0
+    },
+    {
+      "fieldName": "fechaEntregaPed",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Pedido",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "nombreEve",
+      "otherEntityName": "evento",
+      "relationshipName": "evento",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "descArt",
+      "otherEntityName": "articulo",
+      "relationshipName": "articulo",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    }
+  ],
+  "service": "serviceClass"
+}

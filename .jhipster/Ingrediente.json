@@ -1,0 +1,33 @@
+{
+  "changelogDate": "20220414005523",
+  "dto": "no",
+  "fields": [
+    {
+      "fieldName": "cantidadIng",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": 0
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Ingrediente",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "descArt",
+      "otherEntityName": "articulo",
+      "relationshipName": "articulo",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    },
+    {
+      "otherEntityField": "descArt",
+      "otherEntityName": "articulo",
+      "relationshipName": "insumo",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    }
+  ],
+  "service": "serviceClass"
+}

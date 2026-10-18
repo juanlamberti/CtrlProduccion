@@ -1,0 +1,14 @@
+ignorar lineas que comiencen con caracteres que representen comentarios en distintos lenguajes, ejemplo #, --, //, etc
+
+# creacion
+como desarrollador senior angular crear un componente de lookup para relacionar el registro hijo del padre, 
+agregale un boton para crear la [entidad]
+el boton para crear, con un parametro habilitarlo|, por default esta oculto
+cuando se inicializa la pantalla que tiene los lookup y ya esta seleccionado el valor del campo mostrar la lista completa
+
+cuando se hace foco en el campo del lookup y se comienza a escribir borrar el contenido y tomar lo escrito
+
+reemplazar los literales por entradas en el i18n de la lookup base
+
+reemplazar los literales por entradas en el i18n de las especializaciones de lookups
+las definicnoes de los literales ponerlos en cada archivo de la entidad

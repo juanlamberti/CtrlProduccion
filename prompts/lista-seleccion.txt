@@ -1,0 +1,23 @@
+ignorar lineas que comiencen con caracteres que representen comentarios en distintos lenguajes, ejemplo #, --, //, etc
+
+# PANTALLA LISTA de SELECCION
+# creacion
+crear una pantalla en [ENTIDAD], 
+como un nuevo componente en la ruta /home/juan/desarrollo/projects/petConnect/petConnect/src/main/webapp/app/entities/[ENTIDAD]/update-lista
+tiene que tener la lista de todos los tipos [ENTIDAD HIJA] definidos
+es una lista de los siguientes campos
+
+
+Tipo            Dato MC     Obs MC      boton agregar
+no editable     Editable    Editable    
+para los checkbox aplicar lo que dice el archivo prompts/campos-checkbox.txt
+cuando se persista los campos de checkbox son requeridos por SI o por NO
+
+el boton agragar es para agragr un nuevo registro del mismo tipo donde se presiono
+
+en la columna de tipo mostrar la imagen si 3esta definida
+
+incluir esta pantalla en la pantalla detail de centro de atencion
+
+la columna obs puede no existir no incluir
+preguntar si se puede agregar mas de un registro por tipo

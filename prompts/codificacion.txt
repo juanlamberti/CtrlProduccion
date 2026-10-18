@@ -1,0 +1,21 @@
+Como desarrollador senior Java con Spring Boot
+
+en el backend
+sin cambiar el modelo de la base de datos o persistencia
+hace que el atributo codigo del dominio o entidad pueda ser null solo desde el front end
+en la clase [Entidad]Service.java crea un metodo para calcular el codigo, 
+basado en eñ codigo del tipo como prefijo (si existe) y un numero secuencial por la cantidad de registros con ese tipo
+hace que cuando se crea el registro tome el valor
+
+en el front end:
+en el update solo el usaurio con role ADMIN lo puede cambiar
+ocultarlo para los usuarios sin role ADMIN
+
+en el detail solo el usaurio con role ADMIN lo puede ver
+ocultarlo para los usuarios sin role ADMIN
+
+NO COMPILES
+SI NO ENTENDES A QUE ENTIDAD SE REFIERE PREGUNTA
+
+
+si el usuario no tiene role ROLE_ADMIN ocultar el campo codigo en todas las pantallas

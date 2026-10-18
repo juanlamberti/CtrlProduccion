@@ -1,0 +1,9 @@
+ignorar lineas que comiencen con caracteres que representen comentarios en distintos lenguajes, ejemplo #, --, //, etc
+
+# agrupar campos
+en el componente detail y update de la entidad [ENTIDAD] agrupa en una sola linea las fechas de inicio y fin 
+pone la entidad padre como ultimo campo
+no se puede utilizar row-col de bootstrap
+
+en el componente update de la entidad [ENTIDAD] agrupa en una sola linea 
+el nombre del archivo y a la izquierda la seleccion del archivo
