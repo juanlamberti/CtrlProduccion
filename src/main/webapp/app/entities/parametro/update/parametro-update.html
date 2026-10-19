@@ -1,0 +1,176 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-parametro-heading" data-cy="ParametroCreateUpdateHeading">
+        <jhi-entity-icon />&nbsp;<span jhiTranslate="ctrlProdNewApp.parametro.home.createOrEditLabel">Crear o editar Parametro</span>
+      </h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @let codigoParamRef = editForm.get('codigoParam')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_codigoParam" jhiTranslate="ctrlProdNewApp.parametro.codigoParam">Codigo Param</label>
+          <input
+            type="text"
+            class="form-control"
+            name="codigoParam"
+            id="field_codigoParam"
+            data-cy="codigoParam"
+            formControlName="codigoParam"
+          />
+          @if (codigoParamRef.invalid && (codigoParamRef.dirty || codigoParamRef.touched)) {
+            <div>
+              @if (codigoParamRef.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+              @if (codigoParamRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '20' }"
+                  >Este campo no puede superar más de 20 caracteres.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let descParamRef = editForm.get('descParam')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_descParam" jhiTranslate="ctrlProdNewApp.parametro.descParam">Desc Param</label>
+          <input type="text" class="form-control" name="descParam" id="field_descParam" data-cy="descParam" formControlName="descParam" />
+          @if (descParamRef.invalid && (descParamRef.dirty || descParamRef.touched)) {
+            <div>
+              @if (descParamRef.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+              @if (descParamRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '500' }"
+                  >Este campo no puede superar más de 500 caracteres.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let valorParamRef = editForm.get('valorParam')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_valorParam" jhiTranslate="ctrlProdNewApp.parametro.valorParam">Valor Param</label>
+          <input
+            type="text"
+            class="form-control"
+            name="valorParam"
+            id="field_valorParam"
+            data-cy="valorParam"
+            formControlName="valorParam"
+          />
+          @if (valorParamRef.invalid && (valorParamRef.dirty || valorParamRef.touched)) {
+            <div>
+              @if (valorParamRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '32000' }"
+                  >Este campo no puede superar más de 32000 caracteres.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let archivoParamRef = editForm.get('archivoParam')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_archivoParam" jhiTranslate="ctrlProdNewApp.parametro.archivoParam">Archivo Param</label>
+          <div>
+            @if (archivoParamRef.value) {
+              <img
+                [src]="'data:' + editForm.get('archivoParamContentType')!.value + ';base64,' + archivoParamRef.value"
+                style="max-height: 100px"
+                alt="parametro"
+              />
+            }
+            @if (archivoParamRef.value) {
+              <div class="form-text text-danger clearfix">
+                <span class="pull-start">{{ editForm.get('archivoParamContentType')!.value }}, {{ byteSize(archivoParamRef.value!) }}</span>
+                <button
+                  type="button"
+                  (click)="clearInputImage('archivoParam', 'archivoParamContentType', 'file_archivoParam')"
+                  class="btn btn-secondary btn-xs pull-end"
+                >
+                  <fa-icon icon="times" />
+                </button>
+              </div>
+            }
+            <input
+              type="file"
+              id="file_archivoParam"
+              data-cy="archivoParam"
+              (change)="setFileData($event, 'archivoParam', true)"
+              accept="image/*"
+              jhiTranslate="entity.action.addimage"
+              aria-label="Archivo Param"
+            />
+          </div>
+          <input
+            type="hidden"
+            class="form-control"
+            name="archivoParam"
+            id="field_archivoParam"
+            data-cy="archivoParam"
+            formControlName="archivoParam"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            name="archivoParamContentType"
+            id="field_archivoParamContentType"
+            formControlName="archivoParamContentType"
+          />
+        </div>
+
+        @let editCteSNParamRef = editForm.get('editCteSNParam')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_editCteSNParam" jhiTranslate="ctrlProdNewApp.parametro.editCteSNParam"
+            >Edit Cte SN Param</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="editCteSNParam"
+            id="field_editCteSNParam"
+            data-cy="editCteSNParam"
+            formControlName="editCteSNParam"
+          />
+          @if (editCteSNParamRef.invalid && (editCteSNParamRef.dirty || editCteSNParamRef.touched)) {
+            <div>
+              @if (editCteSNParamRef.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+              @if (editCteSNParamRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '2' }"
+                  >Este campo no puede superar más de 2 caracteres.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_tipo" jhiTranslate="ctrlProdNewApp.parametro.tipo">Tipo</label>
+          <jhi-tipo-parametro-lookup inputId="field_tipo" data-cy="tipo" formControlName="tipo" />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-unidad-heading" data-cy="UnidadCreateUpdateHeading">
+        <jhi-entity-icon />&nbsp;<span jhiTranslate="ctrlProdNewApp.unidad.home.createOrEditLabel">Crear o editar Unidad</span>
+      </h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @let descUniRef = editForm.get('descUni')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_descUni" jhiTranslate="ctrlProdNewApp.unidad.descUni">Desc Uni</label>
+          <input type="text" class="form-control" name="descUni" id="field_descUni" data-cy="descUni" formControlName="descUni" />
+          @if (descUniRef.invalid && (descUniRef.dirty || descUniRef.touched)) {
+            <div>
+              @if (descUniRef.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+              @if (descUniRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '100' }"
+                  >Este campo no puede superar más de 100 caracteres.</small
+                >
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

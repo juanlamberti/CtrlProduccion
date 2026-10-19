@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (ingrediente(); as ingredienteRef) {
+      <div>
+        <h2 data-cy="ingredienteDetailsHeading">
+          <jhi-entity-icon />&nbsp;<span jhiTranslate="ctrlProdNewApp.ingrediente.detail.title">Ingrediente</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="ctrlProdNewApp.ingrediente.cantidadIng">Cantidad Ing</span></dt>
+          <dd>
+            <span>{{ ingredienteRef.cantidadIng }}</span>
+          </dd>
+          <dt><span jhiTranslate="ctrlProdNewApp.ingrediente.articulo">Articulo</span></dt>
+          <dd>
+            @if (ingrediente()!.articulo) {
+              <div>
+                <a [routerLink]="['/articulo', ingrediente()!.articulo?.id, 'view']">{{ ingredienteRef.articulo?.descArt }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="ctrlProdNewApp.ingrediente.insumo">Insumo</span></dt>
+          <dd>
+            @if (ingrediente()!.insumo) {
+              <div>
+                <a [routerLink]="['/articulo', ingrediente()!.insumo?.id, 'view']">{{ ingredienteRef.insumo?.descArt }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+        </button>
+
+        <button type="button" [routerLink]="['/ingrediente', ingredienteRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

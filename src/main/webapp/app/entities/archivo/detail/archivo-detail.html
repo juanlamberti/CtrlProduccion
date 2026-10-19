@@ -1,0 +1,49 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (archivo(); as archivoRef) {
+      <div>
+        <h2 data-cy="archivoDetailsHeading">
+          <jhi-entity-icon />&nbsp;<span jhiTranslate="ctrlProdNewApp.archivo.detail.title">Archivo</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="ctrlProdNewApp.archivo.nombreArc">Nombre Arc</span></dt>
+          <dd>
+            <span>{{ archivoRef.nombreArc }}</span>
+          </dd>
+          <dt><span jhiTranslate="ctrlProdNewApp.archivo.estadoArc">Estado Arc</span></dt>
+          <dd>
+            <span>{{ archivoRef.estadoArc }}</span>
+          </dd>
+          <dt><span jhiTranslate="ctrlProdNewApp.archivo.tipoArc">Tipo Arc</span></dt>
+          <dd>
+            <span>{{ archivoRef.tipoArc }}</span>
+          </dd>
+          <dt><span jhiTranslate="ctrlProdNewApp.archivo.archivoArc">Archivo Arc</span></dt>
+          <dd>
+            @if (archivoRef.archivoArc) {
+              <div>
+                <a (click)="openFile(archivoRef.archivoArc, archivoRef.archivoArcContentType)" jhiTranslate="entity.action.open">Abrir</a>
+                {{ archivoRef.archivoArcContentType }}, {{ byteSize(archivoRef.archivoArc) }}
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+        </button>
+
+        <button type="button" [routerLink]="['/archivo', archivoRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

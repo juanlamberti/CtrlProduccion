@@ -1,0 +1,61 @@
+<div class="position-relative" (focusout)="blur($event)">
+  <div class="input-group">
+    <span class="input-group-text"><fa-icon icon="search" /></span>
+    <input
+      type="text"
+      class="form-control"
+      role="combobox"
+      autocomplete="off"
+      aria-autocomplete="list"
+      [id]="inputId()"
+      [value]="text()"
+      [disabled]="disabled()"
+      [placeholder]="entityKey + '.lookup.placeholder' | translate"
+      [attr.aria-label]="entityKey + '.lookup.label' | translate"
+      [attr.aria-expanded]="opened()"
+      [attr.aria-controls]="inputId() + '-options'"
+      [attr.aria-activedescendant]="activeIndex() >= 0 && opened() ? inputId() + '-option-' + activeIndex() : null"
+      (focus)="focus()"
+      (beforeinput)="beforeInput($event)"
+      (input)="search($event)"
+      (keydown)="keydown($event)"
+    />
+    @if (text()) {
+      <button type="button" class="btn btn-outline-secondary" [disabled]="disabled()" (click)="clear()">
+        <fa-icon icon="times" /><span class="visually-hidden" jhiTranslate="global.lookup.clear"></span>
+      </button>
+    }
+    @if (allowCreate() && !disabled()) {
+      <a class="btn btn-outline-primary" [routerLink]="['/' + routePath, 'new']" target="_blank" rel="noopener">
+        <fa-icon icon="plus" />&nbsp;<span [jhiTranslate]="entityKey + '.lookup.create'"></span>
+        <span class="visually-hidden" jhiTranslate="global.lookup.newWindow"></span>
+      </a>
+    }
+  </div>
+  @if (opened() && !disabled()) {
+    <div class="dropdown-menu show w-100 p-0 overflow-auto shadow" style="max-height: 18rem; z-index: 1050">
+      @if (loading()) {
+        <div class="px-3 py-2" role="status" jhiTranslate="global.lookup.loading"></div>
+      } @else if (failed()) {
+        <div class="px-3 py-2 text-danger" role="alert" jhiTranslate="global.lookup.error"></div>
+      } @else if (options().length === 0) {
+        <div class="px-3 py-2" role="status" jhiTranslate="global.lookup.empty"></div>
+      }
+      <div role="listbox" [id]="inputId() + '-options'" [attr.aria-label]="entityKey + '.lookup.label' | translate">
+        @for (option of options(); track option.id; let index = $index) {
+          <button
+            type="button"
+            role="option"
+            class="dropdown-item"
+            [class.active]="activeIndex() === index"
+            [id]="inputId() + '-option-' + index"
+            [attr.aria-selected]="activeIndex() === index"
+            (click)="select(option)"
+          >
+            {{ display(option) }}
+          </button>
+        }
+      </div>
+    </div>
+  }
+</div>

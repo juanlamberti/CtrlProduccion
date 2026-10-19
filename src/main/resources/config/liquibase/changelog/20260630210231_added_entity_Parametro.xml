@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity Parametro.
+    -->
+    <changeSet id="20260630210231-1" author="jhipster">
+        <createTable tableName="parametro">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="codigo_param" type="varchar(20)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_parametro__codigo_param" />
+            </column>
+            <column name="desc_param" type="varchar(500)">
+                <constraints nullable="false" />
+            </column>
+            <column name="valor_param" type="varchar(32000)">
+                <constraints nullable="true" />
+            </column>
+            <column name="archivo_param" type="${blobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="archivo_param_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="edit_cte_sn_param" type="varchar(2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="tipo_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+
+    <changeSet id="20260630210231-sequence" author="jhipster">
+        <createSequence sequenceName="param_seq" startValue="1" incrementBy="1"/>
+    </changeSet>
+
+    <changeSet id="20260630210231-auditoria" author="jhipster">
+        <addColumn tableName="parametro">
+            <column name="created_by" type="varchar(50)" defaultValue="system">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+            <column name="status" type="varchar(50)" defaultValue="ACTIVE">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

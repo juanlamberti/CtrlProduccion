@@ -14,7 +14,7 @@
     "devDatabaseType": "postgresql",
     "enableHibernateCache": true,
     "enableTranslation": true,
-    "entities": [],
+    "entities": ["Articulo", "Ingrediente", "TipoArticulo", "Unidad", "Parametro", "TipoParametro", "Archivo"],
     "feignClient": null,
     "jhipsterVersion": "9.4.0",
     "jwtSecretKey": "ZWViMDJlNDNmOGJiMmE1N2E5YTQ5MDZlOWQyYzQ0NzE4NWM3NDljZDhhYWE0MGVlYjgyNTcyZjk3OTU5MjkxZmUzZjM2OTdiYTI3ZGIxNGJmYTNjNGQwNzNmYjVhOWM1NjBlMzMwMjA2NGJiYWVlYTI0OTUzY2VjYmJlZjQ2OGQ=",

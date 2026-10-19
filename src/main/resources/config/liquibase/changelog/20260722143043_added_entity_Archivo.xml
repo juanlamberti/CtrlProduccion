@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity Archivo.
+    -->
+    <changeSet id="20260722143043-1" author="jhipster">
+        <createTable tableName="archivo">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="nombre_arc" type="varchar(1000)">
+                <constraints nullable="false" />
+            </column>
+            <column name="estado_arc" type="varchar(20)">
+                <constraints nullable="false" />
+            </column>
+            <column name="tipo_arc" type="varchar(100)">
+                <constraints nullable="false" />
+            </column>
+            <column name="archivo_arc" type="${blobType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="archivo_arc_content_type" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+
+    <changeSet id="20260722143043-sequence" author="jhipster">
+        <createSequence sequenceName="arc_seq" startValue="1" incrementBy="1"/>
+    </changeSet>
+
+    <changeSet id="20260722143043-auditoria" author="jhipster">
+        <addColumn tableName="archivo">
+            <column name="created_by" type="varchar(50)" defaultValue="system">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+            <column name="status" type="varchar(50)" defaultValue="ACTIVE">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

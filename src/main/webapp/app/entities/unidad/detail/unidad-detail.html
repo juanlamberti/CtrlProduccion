@@ -1,0 +1,32 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (unidad(); as unidadRef) {
+      <div>
+        <h2 data-cy="unidadDetailsHeading">
+          <jhi-entity-icon />&nbsp;<span jhiTranslate="ctrlProdNewApp.unidad.detail.title">Unidad</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="ctrlProdNewApp.unidad.descUni">Desc Uni</span></dt>
+          <dd>
+            <span>{{ unidadRef.descUni }}</span>
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+        </button>
+
+        <button type="button" [routerLink]="['/unidad', unidadRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (tipoParametro(); as tipoParametroRef) {
+      <div>
+        <h2 data-cy="tipoParametroDetailsHeading">
+          <jhi-entity-icon />&nbsp;<span jhiTranslate="ctrlProdNewApp.tipoParametro.detail.title">Tipo Parametro</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="ctrlProdNewApp.tipoParametro.codigoTpParam">Codigo Tp Param</span></dt>
+          <dd>
+            <span>{{ tipoParametroRef.codigoTpParam }}</span>
+          </dd>
+          <dt><span jhiTranslate="ctrlProdNewApp.tipoParametro.descTpParam">Desc Tp Param</span></dt>
+          <dd>
+            <span>{{ tipoParametroRef.descTpParam }}</span>
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+        </button>
+
+        <button type="button" [routerLink]="['/tipo-parametro', tipoParametroRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

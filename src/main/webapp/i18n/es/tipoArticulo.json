@@ -1,0 +1,33 @@
+{
+  "ctrlProdNewApp": {
+    "tipoArticulo": {
+      "home": {
+        "title": "Tipo Articulos",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Tipo Articulo",
+        "createOrEditLabel": "Crear o editar Tipo Articulo",
+        "notFound": "Ningún Tipo Articulos encontrado"
+      },
+      "created": "Un nuevo Tipo Articulo ha sido creado con el identificador {{ param }}",
+      "updated": "Un Tipo Articulo ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Tipo Articulo ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Tipo Articulo {{ desc }}?"
+      },
+      "detail": {
+        "title": "Tipo Articulo"
+      },
+      "id": "ID",
+      "descTpArt": "Desc Tp Art",
+      "search": {
+        "label": "Buscar por descripción",
+        "clear": "Limpiar búsqueda"
+      },
+      "lookup": {
+        "label": "Seleccionar tipo de artículo",
+        "placeholder": "Buscar tipo de artículo",
+        "create": "Crear tipo de artículo"
+      }
+    }
+  }
+}

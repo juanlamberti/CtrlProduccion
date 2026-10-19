@@ -1,0 +1,33 @@
+{
+  "ctrlProdNewApp": {
+    "unidad": {
+      "home": {
+        "title": "Unidads",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Unidad",
+        "createOrEditLabel": "Crear o editar Unidad",
+        "notFound": "Ningún Unidads encontrado"
+      },
+      "created": "Un nuevo Unidad ha sido creado con el identificador {{ param }}",
+      "updated": "Un Unidad ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Unidad ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Unidad {{ desc }}?"
+      },
+      "detail": {
+        "title": "Unidad"
+      },
+      "id": "ID",
+      "descUni": "Desc Uni",
+      "search": {
+        "label": "Buscar por descripción",
+        "clear": "Limpiar búsqueda"
+      },
+      "lookup": {
+        "label": "Seleccionar unidad",
+        "placeholder": "Buscar unidad",
+        "create": "Crear unidad"
+      }
+    }
+  }
+}

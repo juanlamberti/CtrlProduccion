@@ -12,3 +12,4 @@ reemplazar los literales por entradas en el i18n de la lookup base
 
 reemplazar los literales por entradas en el i18n de las especializaciones de lookups
 las definicnoes de los literales ponerlos en cada archivo de la entidad
+

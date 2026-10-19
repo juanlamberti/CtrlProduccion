@@ -1,0 +1,30 @@
+@if (articulo) {
+  <form name="deleteForm" (ngSubmit)="confirmDelete(articulo.id)">
+    <div class="modal-header">
+      <h4 class="modal-title" data-cy="articuloDeleteDialogHeading">
+        <jhi-entity-icon />&nbsp;<span jhiTranslate="entity.delete.title">Confirmar operación de borrado</span>
+      </h4>
+    </div>
+
+    <div class="modal-body">
+      <jhi-alert-error />
+      <p
+        id="jhi-delete-articulo-heading"
+        jhiTranslate="ctrlProdNewApp.articulo.delete.question"
+        [translateValues]="{ desc: articulo.descArt }"
+      >
+        ¿Seguro que quiere eliminar Articulo {{ articulo.descArt }}?
+      </p>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="cancel()">
+        <fa-icon icon="ban" />&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+      </button>
+
+      <button id="jhi-confirm-delete-articulo" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
+        <fa-icon icon="times" />&nbsp;<span jhiTranslate="entity.action.delete">Eliminar</span>
+      </button>
+    </div>
+  </form>
+}

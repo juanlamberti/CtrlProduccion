@@ -1,0 +1,41 @@
+{
+  "ctrlProdNewApp": {
+    "articulo": {
+      "home": {
+        "title": "Articulos",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Articulo",
+        "createOrEditLabel": "Crear o editar Articulo",
+        "notFound": "Ningún Articulos encontrado"
+      },
+      "created": "Un nuevo Articulo ha sido creado con el identificador {{ param }}",
+      "updated": "Un Articulo ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Articulo ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Articulo {{ desc }}?"
+      },
+      "detail": {
+        "title": "Articulo"
+      },
+      "id": "ID",
+      "descArt": "Desc Art",
+      "recetaArt": "Receta Art",
+      "unidadGenerarArt": "Unidad Generar Art",
+      "mermaPreparacionArt": "Merma Preparacion Art",
+      "pesoArt": "Peso Art",
+      "presentacionCompraArt": "Presentacion Compra Art",
+      "valorPresentacionArt": "Valor Presentacion Art",
+      "unidadPresentacionArt": "Unidad Presentacion Art",
+      "tipoArt": "Tipo Art",
+      "search": {
+        "label": "Buscar por descripción",
+        "clear": "Limpiar búsqueda"
+      },
+      "lookup": {
+        "label": "Seleccionar artículo",
+        "placeholder": "Buscar artículo",
+        "create": "Crear artículo"
+      }
+    }
+  }
+}

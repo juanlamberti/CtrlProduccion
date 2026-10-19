@@ -1,0 +1,51 @@
+{
+  "annotations": {
+    "changelogDate": "20260630210231"
+  },
+  "dto": "no",
+  "fields": [
+    {
+      "fieldName": "codigoParam",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "maxlength"],
+      "fieldValidateRulesMaxlength": "20"
+    },
+    {
+      "fieldName": "descParam",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "500"
+    },
+    {
+      "fieldName": "valorParam",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "32000"
+    },
+    {
+      "fieldName": "archivoParam",
+      "fieldType": "ImageBlob"
+    },
+    {
+      "fieldName": "editCteSNParam",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "2"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Parametro",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "descTpParam",
+      "otherEntityName": "tipoParametro",
+      "relationshipName": "tipo",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

@@ -1,0 +1,38 @@
+{
+  "ctrlProdNewApp": {
+    "parametro": {
+      "home": {
+        "title": "Parametros",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Parametro",
+        "createOrEditLabel": "Crear o editar Parametro",
+        "notFound": "Ningún Parametros encontrado"
+      },
+      "created": "Un nuevo Parametro ha sido creado con el identificador {{ param }}",
+      "updated": "Un Parametro ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Parametro ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Parametro {{ desc }}?"
+      },
+      "detail": {
+        "title": "Parametro"
+      },
+      "id": "ID",
+      "codigoParam": "Codigo Param",
+      "descParam": "Desc Param",
+      "valorParam": "Valor Param",
+      "archivoParam": "Archivo Param",
+      "editCteSNParam": "Edit Cte SN Param",
+      "tipo": "Tipo",
+      "search": {
+        "label": "Buscar por código o descripción",
+        "clear": "Limpiar búsqueda"
+      },
+      "lookup": {
+        "label": "Seleccionar parámetro",
+        "placeholder": "Buscar parámetro",
+        "create": "Crear parámetro"
+      }
+    }
+  }
+}

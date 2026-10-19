@@ -1,0 +1,138 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-archivo-heading" data-cy="ArchivoCreateUpdateHeading">
+        <jhi-entity-icon />&nbsp;<span jhiTranslate="ctrlProdNewApp.archivo.home.createOrEditLabel">Crear o editar Archivo</span>
+      </h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @let nombreArcRef = editForm.get('nombreArc')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_nombreArc" jhiTranslate="ctrlProdNewApp.archivo.nombreArc">Nombre Arc</label>
+          <input type="text" class="form-control" name="nombreArc" id="field_nombreArc" data-cy="nombreArc" formControlName="nombreArc" />
+          @if (nombreArcRef.invalid && (nombreArcRef.dirty || nombreArcRef.touched)) {
+            <div>
+              @if (nombreArcRef.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+              @if (nombreArcRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '1000' }"
+                  >Este campo no puede superar más de 1000 caracteres.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let estadoArcRef = editForm.get('estadoArc')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_estadoArc" jhiTranslate="ctrlProdNewApp.archivo.estadoArc">Estado Arc</label>
+          <input type="text" class="form-control" name="estadoArc" id="field_estadoArc" data-cy="estadoArc" formControlName="estadoArc" />
+          @if (estadoArcRef.invalid && (estadoArcRef.dirty || estadoArcRef.touched)) {
+            <div>
+              @if (estadoArcRef.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+              @if (estadoArcRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '20' }"
+                  >Este campo no puede superar más de 20 caracteres.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let tipoArcRef = editForm.get('tipoArc')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_tipoArc" jhiTranslate="ctrlProdNewApp.archivo.tipoArc">Tipo Arc</label>
+          <input type="text" class="form-control" name="tipoArc" id="field_tipoArc" data-cy="tipoArc" formControlName="tipoArc" />
+          @if (tipoArcRef.invalid && (tipoArcRef.dirty || tipoArcRef.touched)) {
+            <div>
+              @if (tipoArcRef.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+              @if (tipoArcRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '100' }"
+                  >Este campo no puede superar más de 100 caracteres.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let archivoArcRef = editForm.get('archivoArc')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_archivoArc" jhiTranslate="ctrlProdNewApp.archivo.archivoArc">Archivo Arc</label>
+          <div>
+            @if (archivoArcRef.value) {
+              <div class="form-text text-danger clearfix">
+                <a
+                  class="pull-start"
+                  (click)="openFile(archivoArcRef.value!, editForm.get('archivoArcContentType')!.value!)"
+                  jhiTranslate="entity.action.open"
+                  >Abrir</a
+                ><br />
+                <span class="pull-start">{{ editForm.get('archivoArcContentType')!.value }}, {{ byteSize(archivoArcRef.value!) }}</span>
+                <button
+                  type="button"
+                  (click)="editForm.patchValue({ archivoArc: undefined, archivoArcContentType: undefined })"
+                  class="btn btn-secondary btn-xs pull-end"
+                >
+                  <fa-icon icon="times" />
+                </button>
+              </div>
+            }
+            <input
+              type="file"
+              id="file_archivoArc"
+              data-cy="archivoArc"
+              (change)="setFileData($event, 'archivoArc', false)"
+              jhiTranslate="entity.action.addblob"
+              aria-label="Archivo Arc"
+            />
+          </div>
+          <input
+            type="hidden"
+            class="form-control"
+            name="archivoArc"
+            id="field_archivoArc"
+            data-cy="archivoArc"
+            formControlName="archivoArc"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            name="archivoArcContentType"
+            id="field_archivoArcContentType"
+            formControlName="archivoArcContentType"
+          />
+          @if (archivoArcRef.invalid && (archivoArcRef.dirty || archivoArcRef.touched)) {
+            <div>
+              @if (archivoArcRef.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

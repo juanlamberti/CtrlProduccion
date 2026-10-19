@@ -1,0 +1,67 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (parametro(); as parametroRef) {
+      <div>
+        <h2 data-cy="parametroDetailsHeading">
+          <jhi-entity-icon />&nbsp;<span jhiTranslate="ctrlProdNewApp.parametro.detail.title">Parametro</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="ctrlProdNewApp.parametro.codigoParam">Codigo Param</span></dt>
+          <dd>
+            <span>{{ parametroRef.codigoParam }}</span>
+          </dd>
+          <dt><span jhiTranslate="ctrlProdNewApp.parametro.descParam">Desc Param</span></dt>
+          <dd>
+            <span>{{ parametroRef.descParam }}</span>
+          </dd>
+          <dt><span jhiTranslate="ctrlProdNewApp.parametro.valorParam">Valor Param</span></dt>
+          <dd>
+            <span>{{ parametroRef.valorParam }}</span>
+          </dd>
+          <dt><span jhiTranslate="ctrlProdNewApp.parametro.archivoParam">Archivo Param</span></dt>
+          <dd>
+            @if (parametroRef.archivoParam) {
+              <div>
+                <a (click)="openFile(parametroRef.archivoParam, parametroRef.archivoParamContentType, 'image')">
+                  <img
+                    [src]="'data:' + parametroRef.archivoParamContentType + ';base64,' + parametroRef.archivoParam"
+                    style="max-width: 100%"
+                    alt="parametro"
+                  />
+                </a>
+                {{ parametroRef.archivoParamContentType }}, {{ byteSize(parametroRef.archivoParam) }}
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="ctrlProdNewApp.parametro.editCteSNParam">Edit Cte SN Param</span></dt>
+          <dd>
+            <span>{{ parametroRef.editCteSNParam }}</span>
+          </dd>
+          <dt><span jhiTranslate="ctrlProdNewApp.parametro.tipo">Tipo</span></dt>
+          <dd>
+            @if (parametro()!.tipo) {
+              <div>
+                <a [routerLink]="['/tipo-parametro', parametro()!.tipo?.id, 'view']">{{ parametroRef.tipo?.descTpParam }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+        </button>
+
+        <button type="button" [routerLink]="['/parametro', parametroRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

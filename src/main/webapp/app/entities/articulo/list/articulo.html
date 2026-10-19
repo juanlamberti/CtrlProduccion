@@ -1,0 +1,187 @@
+<div>
+  <h2 id="page-heading" data-cy="ArticuloHeading">
+    <jhi-entity-icon />&nbsp;
+    <span jhiTranslate="ctrlProdNewApp.articulo.home.title">Articulos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span jhiTranslate="ctrlProdNewApp.articulo.home.refreshListLabel">Refrescar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-articulo"
+        [routerLink]="['/articulo/new']"
+      >
+        <fa-icon icon="plus" />
+        <span jhiTranslate="ctrlProdNewApp.articulo.home.createLabel">Crear nuevo Articulo</span>
+      </button>
+    </div>
+  </h2>
+
+  <form [formGroup]="searchForm" (ngSubmit)="$event.preventDefault()" class="d-flex align-items-end mb-3">
+    <div class="flex-grow-1">
+      <label for="articulo-search" jhiTranslate="ctrlProdNewApp.articulo.search.label"></label>
+      <div class="input-group">
+        <span class="input-group-text"><fa-icon icon="search" /></span>
+        <input id="articulo-search" type="search" class="form-control" formControlName="search" />
+        @if (searchForm.controls.search.value) {
+          <button type="button" class="btn btn-outline-secondary" (click)="clearSearch()">
+            <fa-icon icon="times" /><span class="visually-hidden" jhiTranslate="ctrlProdNewApp.articulo.search.clear"></span>
+          </button>
+        }
+      </div>
+    </div>
+    <button type="button" class="btn btn-secondary ms-3" (click)="clearFilters()">
+      <fa-icon icon="filter-circle-xmark" />&nbsp;<span jhiTranslate="global.filters.clear"></span>
+    </button>
+  </form>
+
+  <jhi-alert-error />
+
+  <jhi-alert />
+
+  <jhi-filter [filters]="filters" />
+
+  @if (articulos().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="ctrlProdNewApp.articulo.home.notFound">Ningún Articulos encontrado</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="descArt">
+              <div class="d-flex">
+                <span jhiTranslate="ctrlProdNewApp.articulo.descArt"></span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+
+            <th scope="col" jhiSortBy="recetaArt">
+              <div class="d-flex">
+                <span jhiTranslate="ctrlProdNewApp.articulo.recetaArt">Receta Art</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="unidadGenerarArt">
+              <div class="d-flex">
+                <span jhiTranslate="ctrlProdNewApp.articulo.unidadGenerarArt">Unidad Generar Art</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="mermaPreparacionArt">
+              <div class="d-flex">
+                <span jhiTranslate="ctrlProdNewApp.articulo.mermaPreparacionArt">Merma Preparacion Art</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="pesoArt">
+              <div class="d-flex">
+                <span jhiTranslate="ctrlProdNewApp.articulo.pesoArt">Peso Art</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="presentacionCompraArt">
+              <div class="d-flex">
+                <span jhiTranslate="ctrlProdNewApp.articulo.presentacionCompraArt">Presentacion Compra Art</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="valorPresentacionArt">
+              <div class="d-flex">
+                <span jhiTranslate="ctrlProdNewApp.articulo.valorPresentacionArt">Valor Presentacion Art</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="unidadPresentacionArt.descUni">
+              <div class="d-flex">
+                <span jhiTranslate="ctrlProdNewApp.articulo.unidadPresentacionArt">Unidad Presentacion Art</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="tipoArt.descTpArt">
+              <div class="d-flex">
+                <span jhiTranslate="ctrlProdNewApp.articulo.tipoArt">Tipo Art</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (articulo of articulos(); track trackId(articulo)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/articulo', articulo.id, 'view']">{{ articulo.descArt }}</a>
+              </td>
+
+              <td>{{ articulo.recetaArt }}</td>
+              <td>{{ articulo.unidadGenerarArt }}</td>
+              <td>{{ articulo.mermaPreparacionArt }}</td>
+              <td>{{ articulo.pesoArt }}</td>
+              <td>{{ articulo.presentacionCompraArt }}</td>
+              <td>{{ articulo.valorPresentacionArt }}</td>
+              <td>
+                @if (articulo.unidadPresentacionArt) {
+                  <div>
+                    <a [routerLink]="['/unidad', articulo.unidadPresentacionArt.id, 'view']">{{
+                      articulo.unidadPresentacionArt.descUni
+                    }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (articulo.tipoArt) {
+                  <div>
+                    <a [routerLink]="['/tipo-articulo', articulo.tipoArt.id, 'view']">{{ articulo.tipoArt.descTpArt }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/articulo', articulo.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+                  </a>
+
+                  <a [routerLink]="['/articulo', articulo.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+                  </a>
+
+                  <button type="button" (click)="delete(articulo)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (articulos().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

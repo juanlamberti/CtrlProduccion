@@ -1,0 +1,35 @@
+{
+  "ctrlProdNewApp": {
+    "ingrediente": {
+      "home": {
+        "title": "Ingredientes",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Ingrediente",
+        "createOrEditLabel": "Crear o editar Ingrediente",
+        "notFound": "Ningún Ingredientes encontrado"
+      },
+      "created": "Un nuevo Ingrediente ha sido creado con el identificador {{ param }}",
+      "updated": "Un Ingrediente ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Ingrediente ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Ingrediente {{ desc }}?"
+      },
+      "detail": {
+        "title": "Ingrediente"
+      },
+      "id": "ID",
+      "cantidadIng": "Cantidad Ing",
+      "articulo": "Articulo",
+      "insumo": "Insumo",
+      "search": {
+        "label": "Buscar por artículo o insumo",
+        "clear": "Limpiar búsqueda"
+      },
+      "lookup": {
+        "label": "Seleccionar ingrediente",
+        "placeholder": "Buscar ingrediente",
+        "create": "Crear ingrediente"
+      }
+    }
+  }
+}

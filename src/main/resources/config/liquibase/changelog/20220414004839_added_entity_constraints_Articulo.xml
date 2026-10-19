@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity Articulo.
+    -->
+    <changeSet id="20220414004839-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="unidad_presentacion_art_id"
+                                 baseTableName="articulo"
+                                 constraintName="fk_articulo__unidad_presentacion_art_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="unidad"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="tipo_art_id"
+                                 baseTableName="articulo"
+                                 constraintName="fk_articulo__tipo_art_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tipo_articulo"
+                                 />
+    </changeSet>
+</databaseChangeLog>

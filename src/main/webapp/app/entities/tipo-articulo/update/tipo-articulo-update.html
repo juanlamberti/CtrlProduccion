@@ -1,0 +1,47 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-tipo-articulo-heading" data-cy="TipoArticuloCreateUpdateHeading">
+        <jhi-entity-icon />&nbsp;<span jhiTranslate="ctrlProdNewApp.tipoArticulo.home.createOrEditLabel">Crear o editar Tipo Articulo</span>
+      </h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @let descTpArtRef = editForm.get('descTpArt')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_descTpArt" jhiTranslate="ctrlProdNewApp.tipoArticulo.descTpArt">Desc Tp Art</label>
+          <input type="text" class="form-control" name="descTpArt" id="field_descTpArt" data-cy="descTpArt" formControlName="descTpArt" />
+          @if (descTpArtRef.invalid && (descTpArtRef.dirty || descTpArtRef.touched)) {
+            <div>
+              @if (descTpArtRef.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+              @if (descTpArtRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '100' }"
+                  >Este campo no puede superar más de 100 caracteres.</small
+                >
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

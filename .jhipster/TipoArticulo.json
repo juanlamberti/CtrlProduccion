@@ -1,5 +1,7 @@
 {
-  "changelogDate": "20220414194007",
+  "annotations": {
+    "changelogDate": "20220414194007"
+  },
   "dto": "no",
   "fields": [
     {
@@ -14,5 +16,6 @@
   "pagination": "pagination",
   "readOnly": false,
   "relationships": [],
+  "searchEngine": "no",
   "service": "serviceClass"
 }

@@ -44,6 +44,13 @@ public class CacheConfiguration {
             createCache(cm, com.findotechnet.domain.User.class.getName());
             createCache(cm, com.findotechnet.domain.Authority.class.getName());
             createCache(cm, com.findotechnet.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.findotechnet.domain.Articulo.class.getName());
+            createCache(cm, com.findotechnet.domain.Ingrediente.class.getName());
+            createCache(cm, com.findotechnet.domain.TipoArticulo.class.getName());
+            createCache(cm, com.findotechnet.domain.Unidad.class.getName());
+            createCache(cm, com.findotechnet.domain.Parametro.class.getName());
+            createCache(cm, com.findotechnet.domain.TipoParametro.class.getName());
+            createCache(cm, com.findotechnet.domain.Archivo.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

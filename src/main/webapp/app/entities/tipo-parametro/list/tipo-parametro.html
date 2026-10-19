@@ -1,0 +1,124 @@
+<div>
+  <h2 id="page-heading" data-cy="TipoParametroHeading">
+    <jhi-entity-icon />&nbsp;
+    <span jhiTranslate="ctrlProdNewApp.tipoParametro.home.title">Tipo Parametros</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span jhiTranslate="ctrlProdNewApp.tipoParametro.home.refreshListLabel">Refrescar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-tipo-parametro"
+        [routerLink]="['/tipo-parametro/new']"
+      >
+        <fa-icon icon="plus" />
+        <span jhiTranslate="ctrlProdNewApp.tipoParametro.home.createLabel">Crear nuevo Tipo Parametro</span>
+      </button>
+    </div>
+  </h2>
+
+  <form [formGroup]="searchForm" (ngSubmit)="$event.preventDefault()" class="d-flex align-items-end mb-3">
+    <div class="flex-grow-1">
+      <label for="tipo-parametro-search" jhiTranslate="ctrlProdNewApp.tipoParametro.search.label"></label>
+      <div class="input-group">
+        <span class="input-group-text"><fa-icon icon="search" /></span>
+        <input id="tipo-parametro-search" type="search" class="form-control" formControlName="search" />
+        @if (searchForm.controls.search.value) {
+          <button type="button" class="btn btn-outline-secondary" (click)="clearSearch()">
+            <fa-icon icon="times" /><span class="visually-hidden" jhiTranslate="ctrlProdNewApp.tipoParametro.search.clear"></span>
+          </button>
+        }
+      </div>
+    </div>
+    <button type="button" class="btn btn-secondary ms-3" (click)="clearFilters()">
+      <fa-icon icon="filter-circle-xmark" />&nbsp;<span jhiTranslate="global.filters.clear"></span>
+    </button>
+  </form>
+
+  <jhi-alert-error />
+
+  <jhi-alert />
+
+  <jhi-filter [filters]="filters" />
+
+  @if (tipoParametros().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="ctrlProdNewApp.tipoParametro.home.notFound">Ningún Tipo Parametros encontrado</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="codigoTpParam">
+              <div class="d-flex">
+                <span jhiTranslate="ctrlProdNewApp.tipoParametro.codigoTpParam"></span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+
+            <th scope="col" jhiSortBy="descTpParam">
+              <div class="d-flex">
+                <span jhiTranslate="ctrlProdNewApp.tipoParametro.descTpParam">Desc Tp Param</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (tipoParametro of tipoParametros(); track trackId(tipoParametro)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/tipo-parametro', tipoParametro.id, 'view']">{{ tipoParametro.codigoTpParam }}</a>
+              </td>
+
+              <td>{{ tipoParametro.descTpParam }}</td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/tipo-parametro', tipoParametro.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+                  </a>
+
+                  <a [routerLink]="['/tipo-parametro', tipoParametro.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+                  </a>
+
+                  <button type="button" (click)="delete(tipoParametro)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (tipoParametros().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

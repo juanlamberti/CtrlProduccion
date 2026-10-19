@@ -1,0 +1,34 @@
+{
+  "ctrlProdNewApp": {
+    "tipoParametro": {
+      "home": {
+        "title": "Tipo Parametros",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Tipo Parametro",
+        "createOrEditLabel": "Crear o editar Tipo Parametro",
+        "notFound": "Ningún Tipo Parametros encontrado"
+      },
+      "created": "Un nuevo Tipo Parametro ha sido creado con el identificador {{ param }}",
+      "updated": "Un Tipo Parametro ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Tipo Parametro ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Tipo Parametro {{ desc }}?"
+      },
+      "detail": {
+        "title": "Tipo Parametro"
+      },
+      "id": "ID",
+      "codigoTpParam": "Codigo Tp Param",
+      "descTpParam": "Desc Tp Param",
+      "search": {
+        "label": "Buscar por código o descripción",
+        "clear": "Limpiar búsqueda"
+      },
+      "lookup": {
+        "label": "Seleccionar tipo de parámetro",
+        "placeholder": "Buscar tipo de parámetro",
+        "create": "Crear tipo de parámetro"
+      }
+    }
+  }
+}

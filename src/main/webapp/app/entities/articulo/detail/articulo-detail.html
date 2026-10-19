@@ -1,0 +1,74 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (articulo(); as articuloRef) {
+      <div>
+        <h2 data-cy="articuloDetailsHeading">
+          <jhi-entity-icon />&nbsp;<span jhiTranslate="ctrlProdNewApp.articulo.detail.title">Articulo</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="ctrlProdNewApp.articulo.descArt">Desc Art</span></dt>
+          <dd>
+            <span>{{ articuloRef.descArt }}</span>
+          </dd>
+          <dt><span jhiTranslate="ctrlProdNewApp.articulo.recetaArt">Receta Art</span></dt>
+          <dd>
+            <span>{{ articuloRef.recetaArt }}</span>
+          </dd>
+          <dt><span jhiTranslate="ctrlProdNewApp.articulo.unidadGenerarArt">Unidad Generar Art</span></dt>
+          <dd>
+            <span>{{ articuloRef.unidadGenerarArt }}</span>
+          </dd>
+          <dt><span jhiTranslate="ctrlProdNewApp.articulo.mermaPreparacionArt">Merma Preparacion Art</span></dt>
+          <dd>
+            <span>{{ articuloRef.mermaPreparacionArt }}</span>
+          </dd>
+          <dt><span jhiTranslate="ctrlProdNewApp.articulo.pesoArt">Peso Art</span></dt>
+          <dd>
+            <span>{{ articuloRef.pesoArt }}</span>
+          </dd>
+          <dt><span jhiTranslate="ctrlProdNewApp.articulo.presentacionCompraArt">Presentacion Compra Art</span></dt>
+          <dd>
+            <span>{{ articuloRef.presentacionCompraArt }}</span>
+          </dd>
+          <dt><span jhiTranslate="ctrlProdNewApp.articulo.valorPresentacionArt">Valor Presentacion Art</span></dt>
+          <dd>
+            <span>{{ articuloRef.valorPresentacionArt }}</span>
+          </dd>
+          <dt><span jhiTranslate="ctrlProdNewApp.articulo.unidadPresentacionArt">Unidad Presentacion Art</span></dt>
+          <dd>
+            @if (articulo()!.unidadPresentacionArt) {
+              <div>
+                <a [routerLink]="['/unidad', articulo()!.unidadPresentacionArt?.id, 'view']">{{
+                  articuloRef.unidadPresentacionArt?.descUni
+                }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="ctrlProdNewApp.articulo.tipoArt">Tipo Art</span></dt>
+          <dd>
+            @if (articulo()!.tipoArt) {
+              <div>
+                <a [routerLink]="['/tipo-articulo', articulo()!.tipoArt?.id, 'view']">{{ articuloRef.tipoArt?.descTpArt }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="button" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+        </button>
+
+        <button type="button" [routerLink]="['/articulo', articuloRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

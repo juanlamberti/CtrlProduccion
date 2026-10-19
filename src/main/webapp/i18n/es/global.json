@@ -7,7 +7,14 @@
       "entities": {
         "main": "Entidades",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
-        "adminAuthority": "Authority"
+        "adminAuthority": "Authority",
+        "articulo": "Articulo",
+        "ingrediente": "Ingrediente",
+        "tipoArticulo": "Tipo Articulo",
+        "unidad": "Unidad",
+        "parametro": "Parametro",
+        "tipoParametro": "Tipo Parametro",
+        "archivo": "Archivo"
       },
       "account": {
         "main": "Cuenta",
@@ -85,7 +92,20 @@
     "ribbon": {
       "dev": "Development"
     },
-    "item-count": "Mostrando {{first}} - {{second}} de {{total}} elementos."
+    "item-count": "Mostrando {{first}} - {{second}} de {{total}} elementos.",
+    "filters": {
+      "clear": "Limpiar"
+    },
+    "lookup": {
+      "label": "Seleccionar registro",
+      "placeholder": "Buscar registro",
+      "create": "Crear registro",
+      "clear": "Limpiar selección",
+      "loading": "Cargando opciones…",
+      "empty": "No se encontraron resultados",
+      "error": "No se pudieron cargar las opciones. Vuelva a enfocar el campo para reintentar.",
+      "newWindow": "Se abre en una pestaña nueva"
+    }
   },
   "entity": {
     "action": {

@@ -118,4 +118,11 @@
             <column name="local_date" type="date"/>
         </createTable>
     </changeSet>
+
+    <changeSet author="jhipster" id="00000000000003" context="test">
+        <createSequence sequenceName="usr_seq" startValue="1" incrementBy="1"/>
+    </changeSet>
+
+
+
 </databaseChangeLog>

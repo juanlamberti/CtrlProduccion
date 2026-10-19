@@ -1,0 +1,31 @@
+{
+  "ctrlProdNewApp": {
+    "archivo": {
+      "home": {
+        "title": "Archivos",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Archivo",
+        "createOrEditLabel": "Crear o editar Archivo",
+        "notFound": "Ningún Archivos encontrado"
+      },
+      "created": "Un nuevo Archivo ha sido creado con el identificador {{ param }}",
+      "updated": "Un Archivo ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Archivo ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Archivo {{ desc }}?"
+      },
+      "detail": {
+        "title": "Archivo"
+      },
+      "id": "ID",
+      "nombreArc": "Nombre Arc",
+      "estadoArc": "Estado Arc",
+      "tipoArc": "Tipo Arc",
+      "archivoArc": "Archivo Arc",
+      "search": {
+        "label": "Buscar por nombre",
+        "clear": "Limpiar búsqueda"
+      }
+    }
+  }
+}

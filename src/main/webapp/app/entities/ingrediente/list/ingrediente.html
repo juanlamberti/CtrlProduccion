@@ -1,0 +1,148 @@
+<div>
+  <h2 id="page-heading" data-cy="IngredienteHeading">
+    <jhi-entity-icon />&nbsp;
+    <span jhiTranslate="ctrlProdNewApp.ingrediente.home.title">Ingredientes</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span jhiTranslate="ctrlProdNewApp.ingrediente.home.refreshListLabel">Refrescar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-ingrediente"
+        [routerLink]="['/ingrediente/new']"
+      >
+        <fa-icon icon="plus" />
+        <span jhiTranslate="ctrlProdNewApp.ingrediente.home.createLabel">Crear nuevo Ingrediente</span>
+      </button>
+    </div>
+  </h2>
+
+  <form [formGroup]="searchForm" (ngSubmit)="$event.preventDefault()" class="d-flex align-items-end mb-3">
+    <div class="flex-grow-1">
+      <label for="ingrediente-search" jhiTranslate="ctrlProdNewApp.ingrediente.search.label"></label>
+      <div class="input-group">
+        <span class="input-group-text"><fa-icon icon="search" /></span>
+        <input id="ingrediente-search" type="search" class="form-control" formControlName="search" />
+        @if (searchForm.controls.search.value) {
+          <button type="button" class="btn btn-outline-secondary" (click)="clearSearch()">
+            <fa-icon icon="times" /><span class="visually-hidden" jhiTranslate="ctrlProdNewApp.ingrediente.search.clear"></span>
+          </button>
+        }
+      </div>
+    </div>
+    <button type="button" class="btn btn-secondary ms-3" (click)="clearFilters()">
+      <fa-icon icon="filter-circle-xmark" />&nbsp;<span jhiTranslate="global.filters.clear"></span>
+    </button>
+  </form>
+
+  <jhi-alert-error />
+
+  <jhi-alert />
+
+  <jhi-filter [filters]="filters" />
+
+  @if (ingredientes().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="ctrlProdNewApp.ingrediente.home.notFound">Ningún Ingredientes encontrado</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="articulo.descArt">
+              <div class="d-flex">
+                <span jhiTranslate="ctrlProdNewApp.ingrediente.articulo"></span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="cantidadIng">
+              <div class="d-flex">
+                <span jhiTranslate="ctrlProdNewApp.ingrediente.cantidadIng">Cantidad Ing</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="articulo.descArt">
+              <div class="d-flex">
+                <span jhiTranslate="ctrlProdNewApp.ingrediente.articulo">Articulo</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="insumo.descArt">
+              <div class="d-flex">
+                <span jhiTranslate="ctrlProdNewApp.ingrediente.insumo">Insumo</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (ingrediente of ingredientes(); track trackId(ingrediente)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/ingrediente', ingrediente.id, 'view']">{{ ingrediente.articulo?.descArt }}</a>
+              </td>
+              <td>{{ ingrediente.cantidadIng }}</td>
+              <td>
+                @if (ingrediente.articulo) {
+                  <div>
+                    <a [routerLink]="['/articulo', ingrediente.articulo.id, 'view']">{{ ingrediente.articulo.descArt }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (ingrediente.insumo) {
+                  <div>
+                    <a [routerLink]="['/articulo', ingrediente.insumo.id, 'view']">{{ ingrediente.insumo.descArt }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/ingrediente', ingrediente.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+                  </a>
+
+                  <a [routerLink]="['/ingrediente', ingrediente.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+                  </a>
+
+                  <button type="button" (click)="delete(ingrediente)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (ingredientes().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page(), totalItems: totalItems(), itemsPerPage: itemsPerPage() }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems()"
+          [page]="page()"
+          [pageSize]="itemsPerPage()"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        />
+      </div>
+    </div>
+  }
+</div>

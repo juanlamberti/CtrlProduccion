@@ -1,0 +1,83 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-tipo-parametro-heading" data-cy="TipoParametroCreateUpdateHeading">
+        <jhi-entity-icon />&nbsp;<span jhiTranslate="ctrlProdNewApp.tipoParametro.home.createOrEditLabel"
+          >Crear o editar Tipo Parametro</span
+        >
+      </h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @let codigoTpParamRef = editForm.get('codigoTpParam')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_codigoTpParam" jhiTranslate="ctrlProdNewApp.tipoParametro.codigoTpParam"
+            >Codigo Tp Param</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="codigoTpParam"
+            id="field_codigoTpParam"
+            data-cy="codigoTpParam"
+            formControlName="codigoTpParam"
+          />
+          @if (codigoTpParamRef.invalid && (codigoTpParamRef.dirty || codigoTpParamRef.touched)) {
+            <div>
+              @if (codigoTpParamRef.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+              @if (codigoTpParamRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '20' }"
+                  >Este campo no puede superar más de 20 caracteres.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let descTpParamRef = editForm.get('descTpParam')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_descTpParam" jhiTranslate="ctrlProdNewApp.tipoParametro.descTpParam">Desc Tp Param</label>
+          <input
+            type="text"
+            class="form-control"
+            name="descTpParam"
+            id="field_descTpParam"
+            data-cy="descTpParam"
+            formControlName="descTpParam"
+          />
+          @if (descTpParamRef.invalid && (descTpParamRef.dirty || descTpParamRef.touched)) {
+            <div>
+              @if (descTpParamRef.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+              @if (descTpParamRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '300' }"
+                  >Este campo no puede superar más de 300 caracteres.</small
+                >
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
