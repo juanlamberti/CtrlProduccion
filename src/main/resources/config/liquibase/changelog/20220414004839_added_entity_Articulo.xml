@@ -30,13 +30,13 @@
                 <constraints nullable="true" />
             </column>
             <column name="presentacion_compra_art" type="${floatType}">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="valor_presentacion_art" type="decimal(21,2)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="unidad_presentacion_art_id" type="bigint">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="tipo_art_id" type="bigint">
                 <constraints nullable="false" />
@@ -48,7 +48,7 @@
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
 
     <changeSet id="20220414003934-1-sequence" author="jhipster">
-        <createSequence sequenceName="evento_seq" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="art_seq" startValue="1" incrementBy="1"/>
     </changeSet>
 
     <changeSet id="20220414003934-auditoria" author="jhipster">

@@ -7,6 +7,15 @@ import ArticuloResolve from './route/articulo-routing-resolve.service';
 
 const articuloRoute: Routes = [
   {
+    path: 'new/ingrediente',
+    loadComponent: () => import('./update/articulo-update').then(m => m.ArticuloUpdate),
+    resolve: {
+      articulo: ArticuloResolve,
+    },
+    data: { ingredient: true },
+    canActivate: [userRouteAccessService],
+  },
+  {
     path: '',
     loadComponent: () => import('./list/articulo').then(m => m.Articulo),
     data: {

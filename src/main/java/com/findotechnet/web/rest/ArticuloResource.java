@@ -63,6 +63,11 @@ public class ArticuloResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new articulo, or with status {@code 400 (Bad Request)} if the articulo already has an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @GetMapping("/{id}/totales")
+    public Articulo getTotales(@PathVariable Long id) {
+        return articuloService.calculateTotals(id);
+    }
+
     @PostMapping("")
     public ResponseEntity<Articulo> createArticulo(@Valid @RequestBody Articulo articulo) throws URISyntaxException {
         LOG.debug("REST request to save Articulo : {}", articulo);

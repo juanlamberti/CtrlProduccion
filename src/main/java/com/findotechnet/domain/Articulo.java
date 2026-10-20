@@ -21,7 +21,7 @@ public class Articulo extends AbstractAuditingEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "articuloSequence")
-    @SequenceGenerator(name = "articuloSequence", sequenceName = "evento_seq", allocationSize = 1)
+    @SequenceGenerator(name = "articuloSequence", sequenceName = "art_seq", allocationSize = 1)
     @Column(name = "id")
     private Long id;
 
@@ -46,18 +46,15 @@ public class Articulo extends AbstractAuditingEntity<Long> {
     @Column(name = "peso_art")
     private Float pesoArt;
 
-    @NotNull
     @DecimalMin(value = "0")
-    @Column(name = "presentacion_compra_art", nullable = false)
+    @Column(name = "presentacion_compra_art")
     private Float presentacionCompraArt;
 
-    @NotNull
     @DecimalMin(value = "0")
     @Column(name = "valor_presentacion_art", precision = 21, scale = 2, nullable = false)
     private BigDecimal valorPresentacionArt;
 
-    @ManyToOne(optional = false)
-    @NotNull
+    @ManyToOne()
     private Unidad unidadPresentacionArt;
 
     @ManyToOne(optional = false)

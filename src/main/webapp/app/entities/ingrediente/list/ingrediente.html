@@ -13,7 +13,7 @@
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-ingrediente"
-        [routerLink]="['/ingrediente/new']"
+        (click)="create()"
       >
         <fa-icon icon="plus" />
         <span jhiTranslate="ctrlProdNewApp.ingrediente.home.createLabel">Crear nuevo Ingrediente</span>
@@ -54,30 +54,31 @@
       <table class="table table-striped" aria-describedby="page-heading">
         <thead>
           <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
-            <th scope="col" jhiSortBy="articulo.descArt">
-              <div class="d-flex">
-                <span jhiTranslate="ctrlProdNewApp.ingrediente.articulo"></span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
             <th scope="col" jhiSortBy="cantidadIng">
               <div class="d-flex">
                 <span jhiTranslate="ctrlProdNewApp.ingrediente.cantidadIng">Cantidad Ing</span>
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
-            <th scope="col" jhiSortBy="articulo.descArt">
-              <div class="d-flex">
-                <span jhiTranslate="ctrlProdNewApp.ingrediente.articulo">Articulo</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
+            @if (!parentArticulo(); as parent) {
+              <th scope="col" jhiSortBy="articulo.descArt">
+                <div class="d-flex">
+                  <span jhiTranslate="ctrlProdNewApp.ingrediente.articulo">Articulo</span>
+                  <fa-icon class="p-1" icon="sort" />
+                </div>
+              </th>
+            }
             <th scope="col" jhiSortBy="insumo.descArt">
               <div class="d-flex">
                 <span jhiTranslate="ctrlProdNewApp.ingrediente.insumo">Insumo</span>
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
+            @if (parentArticulo()) {
+              <th scope="col" jhiTranslate="ctrlProdNewApp.articulo.presentacionCompraArt">Presentación de compra</th>
+              <th scope="col" jhiTranslate="ctrlProdNewApp.articulo.valorPresentacionArt">Valor de presentación</th>
+              <th scope="col" jhiTranslate="ctrlProdNewApp.ingrediente.proportionalValue">Valor proporcional</th>
+            }
             <th scope="col"></th>
           </tr>
         </thead>
@@ -85,34 +86,66 @@
           @for (ingrediente of ingredientes(); track trackId(ingrediente)) {
             <tr data-cy="entityTable">
               <td>
-                <a [routerLink]="['/ingrediente', ingrediente.id, 'view']">{{ ingrediente.articulo?.descArt }}</a>
+                <a href="" (click)="$event.preventDefault(); detail(ingrediente)">{{ ingrediente.cantidadIng }}</a>
               </td>
-              <td>{{ ingrediente.cantidadIng }}</td>
-              <td>
-                @if (ingrediente.articulo) {
-                  <div>
-                    <a [routerLink]="['/articulo', ingrediente.articulo.id, 'view']">{{ ingrediente.articulo.descArt }}</a>
-                  </div>
-                }
-              </td>
+              @if (!parentArticulo(); as parent) {
+                <td>
+                  @if (ingrediente.articulo) {
+                    <div>
+                      <a [routerLink]="['/articulo', ingrediente.articulo.id, 'view']">{{ ingrediente.articulo.descArt }}</a>
+                    </div>
+                  }
+                </td>
+              }
               <td>
                 @if (ingrediente.insumo) {
                   <div>
-                    <a [routerLink]="['/articulo', ingrediente.insumo.id, 'view']">{{ ingrediente.insumo.descArt }}</a>
+                    @if (parentArticulo()) {
+                      <div class="d-flex align-items-center gap-2">
+                        <span>{{ ingrediente.insumo.descArt }}</span>
+                        <button
+                          type="button"
+                          class="btn btn-primary btn-sm flex-shrink-0"
+                          (click)="editArticulo(ingrediente)"
+                          [ngbTooltip]="'ctrlProdNewApp.ingrediente.editArticle' | translate"
+                          [attr.aria-label]="'ctrlProdNewApp.ingrediente.editArticle' | translate"
+                          container="body"
+                        >
+                          <fa-icon icon="pencil-alt" />
+                        </button>
+                      </div>
+                    } @else {
+                      <a [routerLink]="['/articulo', ingrediente.insumo.id, 'view']">{{ ingrediente.insumo.descArt }}</a>
+                    }
                   </div>
                 }
               </td>
+              @if (parentArticulo()) {
+                <td class="text-end">{{ ingrediente.insumo?.presentacionCompraArt | number: '1.0-3' }}</td>
+                <td class="text-end">{{ ingrediente.insumo?.valorPresentacionArt | number: '1.2-2' }}</td>
+                <td class="text-end">
+                  @let factor = proportion(ingrediente);
+                  @let price = ingrediente.insumo?.valorPresentacionArt;
+                  @let quantity = ingrediente.cantidadIng;
+                  @if (factor !== null && price !== null && price !== undefined && quantity) {
+                    <div>{{ quantity * factor | number: '1.2-2' }}</div>
+                    <small class="text-body-secondary">{{ factor | number: '1.0-2' }}</small>
+                  } @else {
+                    <span jhiTranslate="ctrlProdNewApp.ingrediente.proportionUnavailable">Sin datos para calcular</span>
+                  }
+                </td>
+              }
               <td class="text-end">
                 <div class="btn-group">
-                  <a [routerLink]="['/ingrediente', ingrediente.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                  <button type="button" (click)="detail(ingrediente)" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
                     <fa-icon icon="eye" />
                     <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
-                  </a>
+                  </button>
 
-                  <a [routerLink]="['/ingrediente', ingrediente.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                  <button type="button" (click)="create(ingrediente)" class="btn btn-primary btn-sm" data-cy="entityEditButton">
                     <fa-icon icon="pencil-alt" />
                     <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
-                  </a>
+                  </button>
 
                   <button type="button" (click)="delete(ingrediente)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                     <fa-icon icon="times" />

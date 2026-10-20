@@ -1,0 +1,52 @@
+<form class="entity-dialog-spacing" [formGroup]="form" (ngSubmit)="save()" novalidate>
+  <div class="modal-header">
+    <h2 class="modal-title" jhiTranslate="ctrlProdNewApp.ingrediente.editArticle">Editar artículo</h2>
+  </div>
+  <div class="modal-body">
+    <jhi-alert-error />
+    @if (failed()) {
+      <div class="alert alert-danger" role="alert" jhiTranslate="ctrlProdNewApp.ingrediente.articleSaveError">
+        No se pudo guardar el artículo. Intentá nuevamente.
+      </div>
+    }
+    <div class="mb-3">
+      <label class="form-label" for="ingredient-article-description" jhiTranslate="ctrlProdNewApp.articulo.descArt">Descripción</label>
+      <input id="ingredient-article-description" type="text" class="form-control" maxlength="500" formControlName="descArt" />
+      @if (form.controls.descArt.invalid && form.controls.descArt.touched) {
+        <div class="text-danger" jhiTranslate="ctrlProdNewApp.ingrediente.invalidDescription">
+          Ingresá una descripción de hasta 500 caracteres.
+        </div>
+      }
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="ingredient-article-presentation" jhiTranslate="ctrlProdNewApp.articulo.presentacionCompraArt"
+        >Presentación de compra</label
+      >
+      <input id="ingredient-article-presentation" type="number" step="any" class="form-control" formControlName="presentacionCompraArt" />
+      @if (form.controls.presentacionCompraArt.invalid && form.controls.presentacionCompraArt.touched) {
+        <div class="text-danger" jhiTranslate="ctrlProdNewApp.ingrediente.invalidPresentation">Ingresá una presentación mayor a cero.</div>
+      }
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="ingredient-article-value" jhiTranslate="ctrlProdNewApp.articulo.valorPresentacionArt"
+        >Valor de presentación</label
+      >
+      <input id="ingredient-article-value" type="number" min="0" step="0.01" class="form-control" formControlName="valorPresentacionArt" />
+      @if (form.controls.valorPresentacionArt.invalid && form.controls.valorPresentacionArt.touched) {
+        <div class="text-danger" jhiTranslate="ctrlProdNewApp.ingrediente.invalidValue">Ingresá un valor mayor o igual a cero.</div>
+      }
+    </div>
+  </div>
+  <div class="modal-footer justify-content-end">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      [disabled]="isSaving()"
+      (click)="activeModal.dismiss()"
+      jhiTranslate="entity.action.cancel"
+    >
+      Cancelar
+    </button>
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid || isSaving()" jhiTranslate="entity.action.save">Guardar</button>
+  </div>
+</form>

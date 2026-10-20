@@ -23,9 +23,9 @@
       "unidadGenerarArt": "Unidad Generar Art",
       "mermaPreparacionArt": "Merma Preparacion Art",
       "pesoArt": "Peso Art",
-      "presentacionCompraArt": "Presentacion Compra Art",
-      "valorPresentacionArt": "Valor Presentacion Art",
-      "unidadPresentacionArt": "Unidad Presentacion Art",
+      "presentacionCompraArt": "Presentacion",
+      "valorPresentacionArt": "Valor",
+      "unidadPresentacionArt": "Unidad",
       "tipoArt": "Tipo Art",
       "search": {
         "label": "Buscar por descripción",

@@ -14,6 +14,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface IngredienteRepository extends JpaRepository<Ingrediente, Long>, JpaSpecificationExecutor<Ingrediente> {
+    @Query("select i from Ingrediente i join fetch i.insumo where i.articulo.id = :articuloId")
+    List<Ingrediente> findChildren(@Param("articuloId") Long articuloId);
+
     default Optional<Ingrediente> findOneWithEagerRelationships(Long id) {
         return this.findOneWithToOneRelationships(id);
     }

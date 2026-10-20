@@ -1,0 +1,24 @@
+ignorar lineas que comiencen con caracteres que representen comentarios en distintos lenguajes, ejemplo #, --, //, etc
+
+# creacion
+en el componente home agrega dos botones grandes cuando esta logueada poara crear recetas o ingredientes
+
+los ingredientes son articulos que solo ingresan lo siguiente:
+desc_Art
+unidad_presentacion_art y tipo_art (misma linea 2 columnas)
+presentacion_Compra_Art y valor_Presentacion_Art (misma linea 2 columnas)
+
+
+la entiodad articulo es padre e hija de ingredientes para arma recetas, 
+quiero poder dar de alta los articulos como ingredieente y como recetea, 
+cuando doy de alta recestas mostrame a la derecha los ingredientes hijos del articulos creado
+si el artioculo no esta creado no mostrar los ingredientes hasta que se grabe la cabecera
+
+el valor del artoculo se calcula suimando las proporciones de los ingredientes respect a la cantidad inghresada
+mostyrar el monto y el peso total calculados en el artoculo
+
+
+
+no crees modelos nuevos, usa lo que ya existen
+lo mismo con los componetes como los ingredientes de una receta usa la tabla ingredientes
+que sea un boton a la derecaha de la descripcion y que no tenga label y que tenga un tooltip

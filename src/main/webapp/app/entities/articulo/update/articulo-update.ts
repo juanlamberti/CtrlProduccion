@@ -1,3 +1,5 @@
+import { DecimalPipe } from '@angular/common';
+import { Ingrediente } from 'app/entities/ingrediente/list/ingrediente';
 import { UnidadLookup } from 'app/entities/unidad/lookup/unidad-lookup';
 import { TipoArticuloLookup } from 'app/entities/tipo-articulo/lookup/tipo-articulo-lookup';
 import { EntityIcon } from 'app/shared/entity-icon';
@@ -23,11 +25,24 @@ import { ArticuloFormGroup, ArticuloFormService } from './articulo-form.service'
 @Component({
   selector: 'jhi-articulo-update',
   templateUrl: './articulo-update.html',
-  imports: [UnidadLookup, TipoArticuloLookup, EntityIcon, TranslateDirective, FontAwesomeModule, AlertError, ReactiveFormsModule],
+  imports: [
+    DecimalPipe,
+    Ingrediente,
+    UnidadLookup,
+    TipoArticuloLookup,
+    EntityIcon,
+    TranslateDirective,
+    FontAwesomeModule,
+    AlertError,
+    ReactiveFormsModule,
+  ],
 })
 export class ArticuloUpdate implements OnInit {
   readonly isSaving = signal(false);
+  readonly totals = signal<IArticulo | null>(null);
+  readonly totalsError = signal(false);
   articulo: IArticulo | null = null;
+  isIngredient = false;
 
   unidadsSharedCollection = signal<IUnidad[]>([]);
   tipoArticulosSharedCollection = signal<ITipoArticulo[]>([]);
@@ -47,11 +62,30 @@ export class ArticuloUpdate implements OnInit {
     this.tipoArticuloService.compareTipoArticulo(o1, o2);
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ articulo }) => {
+    this.activatedRoute.data.subscribe(({ articulo, ingredient }) => {
+      this.isIngredient = ingredient === true;
       this.articulo = articulo;
+      if (!this.isIngredient && !articulo) {
+        this.editForm.patchValue({ pesoArt: 0, valorPresentacionArt: 0 });
+      }
       if (articulo) {
         this.updateForm(articulo);
       }
+    });
+  }
+
+  loadTotals(): void {
+    if (this.isIngredient || !this.articulo?.id) {
+      return;
+    }
+    this.totals.set(null);
+    this.totalsError.set(false);
+    this.articuloService.totals(this.articulo.id).subscribe({
+      next: totals => {
+        this.totals.set(totals);
+        this.editForm.patchValue({ pesoArt: totals.pesoArt, valorPresentacionArt: totals.valorPresentacionArt });
+      },
+      error: () => this.totalsError.set(true),
     });
   }
 
@@ -71,7 +105,13 @@ export class ArticuloUpdate implements OnInit {
 
   protected subscribeToSaveResponse(result: Observable<IArticulo | null>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
-      next: () => this.onSaveSuccess(),
+      next: articulo => {
+        if (articulo && !this.isIngredient) {
+          this.updateForm(articulo);
+        } else {
+          this.onSaveSuccess();
+        }
+      },
       error: () => this.onSaveError(),
     });
   }
@@ -90,7 +130,8 @@ export class ArticuloUpdate implements OnInit {
 
   protected updateForm(articulo: IArticulo): void {
     this.articulo = articulo;
-    this.articuloFormService.resetForm(this.editForm, articulo);
+    this.articuloFormService.resetForm(this.editForm, articulo, this.isIngredient);
+    this.loadTotals();
 
     this.unidadsSharedCollection.update(unidads =>
       this.unidadService.addUnidadToCollectionIfMissing<IUnidad>(unidads, articulo.unidadPresentacionArt),

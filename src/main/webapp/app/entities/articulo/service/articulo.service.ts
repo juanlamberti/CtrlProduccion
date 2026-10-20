@@ -50,6 +50,10 @@ export class ArticuloService extends ArticulosService {
     return this.http.patch<IArticulo>(`${this.resourceUrl}/${encodeURIComponent(this.getArticuloIdentifier(articulo))}`, articulo);
   }
 
+  totals(id: number): Observable<IArticulo> {
+    return this.http.get<IArticulo>(`${this.resourceUrl}/${encodeURIComponent(id)}/totales`);
+  }
+
   find(id: number): Observable<IArticulo> {
     return this.http.get<IArticulo>(`${this.resourceUrl}/${encodeURIComponent(id)}`);
   }

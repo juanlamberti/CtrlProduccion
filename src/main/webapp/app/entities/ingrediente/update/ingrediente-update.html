@@ -1,11 +1,16 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
+<div class="d-flex justify-content-center entity-dialog-spacing">
+  <div [class]="activeModal || parentArticulo() ? 'col-12' : 'col-8'">
     <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-ingrediente-heading" data-cy="IngredienteCreateUpdateHeading">
-        <jhi-entity-icon />&nbsp;<span jhiTranslate="ctrlProdNewApp.ingrediente.home.createOrEditLabel">Crear o editar Ingrediente</span>
+      <h2 class="modal-header" id="jhi-ingrediente-heading" data-cy="IngredienteCreateUpdateHeading">
+        <jhi-entity-icon />&nbsp;
+        @if (editForm.controls.id.value !== null) {
+          <span jhiTranslate="ctrlProdNewApp.ingrediente.home.editLabel">Editar ingrediente</span>
+        } @else {
+          <span jhiTranslate="ctrlProdNewApp.ingrediente.home.createLabel">Crear nuevo ingrediente</span>
+        }
       </h2>
 
-      <div>
+      <div class="modal-body">
         <jhi-alert-error />
 
         @let cantidadIngRef = editForm.get('cantidadIng')!;
@@ -36,18 +41,19 @@
           }
         </div>
 
-        <div class="mb-3">
-          <label class="form-label" for="field_articulo" jhiTranslate="ctrlProdNewApp.ingrediente.articulo">Articulo</label>
-          <jhi-articulo-lookup inputId="field_articulo" data-cy="articulo" formControlName="articulo" />
-        </div>
-        @if (editForm.get(['articulo'])!.invalid && (editForm.get(['articulo'])!.dirty || editForm.get(['articulo'])!.touched)) {
-          <div>
-            @if (editForm.get(['articulo'])?.errors?.required) {
-              <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
-            }
+        @if (!parentArticulo() && !dialogParent) {
+          <div class="mb-3">
+            <label class="form-label" for="field_articulo" jhiTranslate="ctrlProdNewApp.ingrediente.articulo">Articulo</label>
+            <jhi-articulo-lookup inputId="field_articulo" data-cy="articulo" formControlName="articulo" />
           </div>
+          @if (editForm.get(['articulo'])!.invalid && (editForm.get(['articulo'])!.dirty || editForm.get(['articulo'])!.touched)) {
+            <div>
+              @if (editForm.get(['articulo'])?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+            </div>
+          }
         }
-
         <div class="mb-3">
           <label class="form-label" for="field_insumo" jhiTranslate="ctrlProdNewApp.ingrediente.insumo">Insumo</label>
           <jhi-articulo-lookup inputId="field_insumo" data-cy="insumo" formControlName="insumo" />
@@ -61,10 +67,12 @@
         }
       </div>
 
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban" />&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
-        </button>
+      <div class="modal-footer d-flex justify-content-end gap-2">
+        @if (activeModal || !parentArticulo()) {
+          <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+            <fa-icon icon="ban" />&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+          </button>
+        }
 
         <button
           type="submit"

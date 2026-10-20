@@ -6,7 +6,8 @@
         "refreshListLabel": "Refrescar lista",
         "createLabel": "Crear nuevo Ingrediente",
         "createOrEditLabel": "Crear o editar Ingrediente",
-        "notFound": "Ningún Ingredientes encontrado"
+        "notFound": "Ningún Ingredientes encontrado",
+        "editLabel": "Editar ingrediente"
       },
       "created": "Un nuevo Ingrediente ha sido creado con el identificador {{ param }}",
       "updated": "Un Ingrediente ha sido actualizado con el identificador {{ param }}",
@@ -18,7 +19,7 @@
         "title": "Ingrediente"
       },
       "id": "ID",
-      "cantidadIng": "Cantidad Ing",
+      "cantidadIng": "Cant.",
       "articulo": "Articulo",
       "insumo": "Insumo",
       "search": {
@@ -29,7 +30,12 @@
         "label": "Seleccionar ingrediente",
         "placeholder": "Buscar ingrediente",
         "create": "Crear ingrediente"
-      }
+      },
+      "proportionalValue": "Valor proporcional a la cantidad",
+      "proportionUnavailable": "S/D",
+      "editArticle": "Editar artículo",
+      "articleSaveError": "No se pudo guardar el artículo. Intentá nuevamente.",
+      "invalidDescription": "Ingresá una descripción de hasta 500 caracteres."
     }
   }
 }

@@ -13,3 +13,11 @@ reemplazar los literales por entradas en el i18n de la lookup base
 reemplazar los literales por entradas en el i18n de las especializaciones de lookups
 las definicnoes de los literales ponerlos en cada archivo de la entidad
 
+en el componente de ingredients cuando se lo usa desde articulo mostra los campos
+Presentacion Compra Art y Valor Presentacion Art y la proporcion respecto a la cantidad
+
+
+
+quiro poder editar el artioculo y su valor desde la lista de ingredientes de la receta
+hace qie sea un dialogo y deja solo descripcion, presetnacion y valor
+puede ser un dialogo nuevo

@@ -1,7 +1,8 @@
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap/modal';
 import { ArticuloLookup } from 'app/entities/articulo/lookup/articulo-lookup';
 import { EntityIcon } from 'app/shared/entity-icon';
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, input, output, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -23,6 +24,11 @@ import { IngredienteFormGroup, IngredienteFormService } from './ingrediente-form
   imports: [ArticuloLookup, EntityIcon, TranslateDirective, FontAwesomeModule, AlertError, ReactiveFormsModule],
 })
 export class IngredienteUpdate implements OnInit {
+  dialogIngrediente: IIngrediente | null = null;
+  dialogParent: IArticulo | null = null;
+  readonly activeModal = inject(NgbActiveModal, { optional: true });
+  readonly parentArticulo = input<IArticulo | null>(null);
+  readonly saved = output<number>();
   readonly isSaving = signal(false);
   ingrediente: IIngrediente | null = null;
 
@@ -39,6 +45,19 @@ export class IngredienteUpdate implements OnInit {
   compareArticulo = (o1: IArticulo | null, o2: IArticulo | null): boolean => this.articuloService.compareArticulo(o1, o2);
 
   ngOnInit(): void {
+    if (this.activeModal) {
+      if (this.dialogIngrediente) {
+        this.updateForm(this.dialogIngrediente);
+      } else {
+        this.ingredienteFormService.resetForm(this.editForm, { id: null, articulo: this.dialogParent });
+      }
+      return;
+    }
+    const parent = this.parentArticulo() ?? this.dialogParent;
+    if (parent) {
+      this.ingredienteFormService.resetForm(this.editForm, { id: null, articulo: parent });
+      return;
+    }
     this.activatedRoute.data.subscribe(({ ingrediente }) => {
       this.ingrediente = ingrediente;
       if (ingrediente) {
@@ -48,7 +67,11 @@ export class IngredienteUpdate implements OnInit {
   }
 
   previousState(): void {
-    globalThis.history.back();
+    if (this.activeModal) {
+      this.activeModal.dismiss();
+    } else {
+      globalThis.history.back();
+    }
   }
 
   save(): void {
@@ -63,13 +86,25 @@ export class IngredienteUpdate implements OnInit {
 
   protected subscribeToSaveResponse(result: Observable<IIngrediente | null>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
-      next: () => this.onSaveSuccess(),
+      next: ingrediente => {
+        if (this.activeModal) {
+          this.activeModal.close(ingrediente);
+        } else {
+          this.onSaveSuccess();
+        }
+      },
       error: () => this.onSaveError(),
     });
   }
 
   protected onSaveSuccess(): void {
-    this.previousState();
+    const parent = this.parentArticulo() ?? this.dialogParent;
+    if (parent) {
+      this.ingredienteFormService.resetForm(this.editForm, { id: null, articulo: parent });
+      this.saved.emit(parent.id);
+    } else {
+      this.previousState();
+    }
   }
 
   protected onSaveError(): void {

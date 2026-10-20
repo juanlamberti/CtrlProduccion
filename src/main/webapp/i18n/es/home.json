@@ -1,7 +1,11 @@
 {
   "home": {
-    "title": "¡Bienvenido, Java Hipster!",
+    "title": "¡Bienvenido, al sistema de recetas de \"La Cocina de Ingrid\"!",
     "subtitle": "Esta es su página de inicio",
+    "actions": {
+      "createRecipe": "Crear receta",
+      "createIngredient": "Crear ingrediente"
+    },
     "logged": {
       "message": "Está conectado como \"{{username}}\"."
     },
@@ -14,6 +18,12 @@
       "follow": "contacto @jhipster en Twitter"
     },
     "like": "Si te gusta JHipster, danos una estrella en",
-    "github": "GitHub"
+    "github": "GitHub",
+    "recipeIngredients": {
+      "retry": "Reintentar",
+      "totalAmount": "Monto total",
+      "totalWeight": "Peso total",
+      "totalsError": "No se pudieron calcular los totales. Revisá que las presentaciones sean mayores a cero y que no haya relaciones circulares entre ingredientes."
+    }
   }
 }

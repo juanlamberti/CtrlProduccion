@@ -1,7 +1,14 @@
+import { ArticuloIngredienteDialog } from 'app/entities/articulo/update/articulo-ingrediente-dialog';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap/tooltip';
+import { TranslatePipe } from '@ngx-translate/core';
+import { IngredienteDetail } from '../detail/ingrediente-detail';
+import { IArticulo } from 'app/entities/articulo/articulo.model';
+import { IngredienteUpdate } from '../update/ingrediente-update';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { EntityIcon } from 'app/shared/entity-icon';
+import { DecimalPipe, PercentPipe } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
-import { Component, effect, inject, signal, untracked } from '@angular/core';
+import { Component, effect, inject, input, output, signal, untracked } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Data, ParamMap, Router, RouterLink } from '@angular/router';
 
@@ -24,6 +31,10 @@ import { IngredienteService } from '../service/ingrediente.service';
   selector: 'jhi-ingrediente',
   templateUrl: './ingrediente.html',
   imports: [
+    NgbTooltip,
+    TranslatePipe,
+    DecimalPipe,
+    PercentPipe,
     ReactiveFormsModule,
     EntityIcon,
     RouterLink,
@@ -39,6 +50,8 @@ import { IngredienteService } from '../service/ingrediente.service';
   ],
 })
 export class Ingrediente {
+  readonly parentArticulo = input<IArticulo | null>(null);
+  readonly changed = output<number>();
   readonly ingredientes = signal<IIngrediente[]>([]);
 
   sortState = sortStateSignal({});
@@ -95,10 +108,16 @@ export class Ingrediente {
       this.ingredientes.set(this.fillComponentAttributesFromResponseBody([...this.ingredienteService.ingredientes()]));
     });
     effect(() => {
+      const parent = this.parentArticulo();
       const activatedRouteState = this.activatedRouteState();
       untracked(() => {
         // Only watch for route changes. Other signals should be ignored.
-        this.fillComponentAttributeFromRoute(activatedRouteState.queryParamMap, activatedRouteState.data);
+        if (parent) {
+          this.page.set(1);
+          this.sortState.set({ predicate: 'id', order: 'asc' });
+        } else {
+          this.fillComponentAttributeFromRoute(activatedRouteState.queryParamMap, activatedRouteState.data);
+        }
         this.load();
       });
     });
@@ -112,6 +131,38 @@ export class Ingrediente {
         });
       }
     });
+  }
+
+  proportion(ingrediente: IIngrediente): number | null {
+    const presentation = ingrediente.insumo?.presentacionCompraArt;
+    const value = ingrediente.insumo?.valorPresentacionArt;
+    const quantity = ingrediente.cantidadIng;
+
+    return presentation != null && presentation > 0 && value != null && value > 0 && quantity != null ? value / presentation : null;
+  }
+
+  editArticulo(ingrediente: IIngrediente): void {
+    if (!ingrediente.insumo) {
+      return;
+    }
+    const modalRef = this.modalService.open(ArticuloIngredienteDialog, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.articulo = ingrediente.insumo;
+    modalRef.closed.subscribe(() => this.load());
+  }
+
+  create(ingrediente: IIngrediente | null = null): void {
+    const modalRef = this.modalService.open(IngredienteUpdate, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.dialogIngrediente = ingrediente;
+    modalRef.componentInstance.dialogParent = this.parentArticulo();
+    modalRef.closed.subscribe(() => this.load());
+  }
+
+  detail(ingrediente: IIngrediente): void {
+    const modalRef = this.modalService.open(IngredienteDetail, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.dialogParent = this.parentArticulo();
+    modalRef.componentInstance.ingrediente.set(ingrediente);
+    modalRef.componentInstance.ingrediente.subscribe(() => this.load());
+    modalRef.closed.subscribe(() => this.load());
   }
 
   trackId = (item: IIngrediente): number => this.ingredienteService.getIngredienteIdentifier(item);
@@ -143,6 +194,10 @@ export class Ingrediente {
 
   load(): void {
     this.queryBackend();
+    const parent = this.parentArticulo();
+    if (parent) {
+      this.changed.emit(parent.id);
+    }
   }
 
   navigateToWithComponentValues(event: SortState): void {
@@ -179,10 +234,20 @@ export class Ingrediente {
     for (const filterOption of this.filters.filterOptions) {
       queryObject[filterOption.name] = filterOption.values;
     }
+    const parent = this.parentArticulo();
+    if (parent) {
+      queryObject['articuloId.equals'] = parent.id;
+    }
     this.ingredienteService.search(queryObject);
   }
 
   protected handleNavigation(page: number, sortState: SortState, filterOptions?: IFilterOption[]): void {
+    if (this.parentArticulo()) {
+      this.page.set(page);
+      this.sortState.set(sortState);
+      this.load();
+      return;
+    }
     const queryParamsObj: any = {
       page,
       size: this.itemsPerPage(),
