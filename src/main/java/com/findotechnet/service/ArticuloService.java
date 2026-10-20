@@ -2,6 +2,7 @@ package com.findotechnet.service;
 
 import com.findotechnet.domain.Articulo;
 import com.findotechnet.domain.Ingrediente;
+import com.findotechnet.domain.enumeration.NaturalezaArticulo;
 import com.findotechnet.repository.ArticuloRepository;
 import com.findotechnet.repository.IngredienteRepository;
 import java.math.BigDecimal;
@@ -49,6 +50,7 @@ public class ArticuloService {
      */
     public Articulo save(Articulo articulo) {
         LOG.debug("Request to save Articulo : {}", articulo);
+        clasificar(articulo);
         return articuloRepository.save(articulo);
     }
 
@@ -60,6 +62,7 @@ public class ArticuloService {
      */
     public Articulo update(Articulo articulo) {
         LOG.debug("Request to update Articulo : {}", articulo);
+        clasificar(articulo);
         return articuloRepository.save(articulo);
     }
 
@@ -85,7 +88,7 @@ public class ArticuloService {
 
                 return existingArticulo;
             })
-            .map(articuloRepository::save);
+            .map(this::save);
     }
 
     /**
@@ -119,6 +122,18 @@ public class ArticuloService {
         articuloRepository.deleteById(id);
     }
 
+    public void actualizarNaturaleza(Long id) {
+        articuloRepository.findById(id).ifPresent(this::clasificar);
+    }
+
+    private void clasificar(Articulo articulo) {
+        articulo.setNaturalezaArt(
+            articulo.getId() != null && ingredienteRepository.existsByArticuloId(articulo.getId())
+                ? NaturalezaArticulo.COMPUESTO
+                : NaturalezaArticulo.SIMPLE
+        );
+    }
+
     private <T> void updateIfPresent(Consumer<T> setter, T value) {
         if (value != null) {
             setter.accept(value);
@@ -139,6 +154,7 @@ public class ArticuloService {
                 result.setPesoArt(existing.getPesoArt() == null ? 0f : existing.getPesoArt());
             });
         }
+        result.setNaturalezaArt(relations.get(id).isEmpty() ? NaturalezaArticulo.SIMPLE : NaturalezaArticulo.COMPUESTO);
         return result.valorPresentacionArt(result.getValorPresentacionArt().setScale(2, RoundingMode.HALF_UP));
     }
 

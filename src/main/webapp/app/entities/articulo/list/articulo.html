@@ -21,22 +21,41 @@
     </div>
   </h2>
 
-  <form [formGroup]="searchForm" (ngSubmit)="$event.preventDefault()" class="d-flex align-items-end mb-3">
-    <div class="flex-grow-1">
+  <form [formGroup]="searchForm" (ngSubmit)="$event.preventDefault()" class="d-flex align-items-end mb-3 row">
+    <div class="col">
       <label for="articulo-search" jhiTranslate="ctrlProdNewApp.articulo.search.label"></label>
-      <div class="input-group">
+      <div class="input-group search-field">
         <span class="input-group-text"><fa-icon icon="search" /></span>
-        <input id="articulo-search" type="search" class="form-control" formControlName="search" />
-        @if (searchForm.controls.search.value) {
-          <button type="button" class="btn btn-outline-secondary" (click)="clearSearch()">
-            <fa-icon icon="times" /><span class="visually-hidden" jhiTranslate="ctrlProdNewApp.articulo.search.clear"></span>
-          </button>
-        }
+        <div class="search-field-input">
+          <input id="articulo-search" type="search" class="form-control" formControlName="search" />
+          @if (searchForm.controls.search.value) {
+            <button type="button" class="search-field-clear" (click)="clearSearch()">
+              <fa-icon icon="times-circle" class="search-field-clear-icon" /><span
+                class="visually-hidden"
+                jhiTranslate="ctrlProdNewApp.articulo.search.clear"
+              ></span>
+            </button>
+          }
+        </div>
       </div>
     </div>
-    <button type="button" class="btn btn-secondary ms-3" (click)="clearFilters()">
-      <fa-icon icon="filter-circle-xmark" />&nbsp;<span jhiTranslate="global.filters.clear"></span>
-    </button>
+    <div class="col-1" style="flex: 0 0 10%; max-width: 10%">
+      <label for="filter-naturaleza" class="form-label" jhiTranslate="ctrlProdNewApp.articulo.naturalezaArt">Naturaleza</label>
+      <select id="filter-naturaleza" class="form-select" formControlName="naturaleza">
+        <option [ngValue]="null" jhiTranslate="ctrlProdNewApp.articulo.filters.all">Todas</option>
+        <option value="SIMPLE">Simple</option>
+        <option value="COMPUESTO">Compuesto</option>
+      </select>
+    </div>
+    <div class="col">
+      <label for="filter-insumo" class="form-label" jhiTranslate="ctrlProdNewApp.articulo.filters.insumo">Contiene el insumo</label>
+      <jhi-articulo-lookup inputId="filter-insumo" formControlName="insumo" />
+    </div>
+    <div class="col-1">
+      <button type="button" class="btn btn-secondary ms-3" (click)="clearFilters()">
+        <fa-icon icon="filter-circle-xmark" />&nbsp;<span jhiTranslate="global.filters.clear"></span>
+      </button>
+    </div>
   </form>
 
   <jhi-alert-error />
@@ -61,38 +80,32 @@
               </div>
             </th>
 
-            <th scope="col" jhiSortBy="recetaArt">
+            <th scope="col" jhiSortBy="naturalezaArt">
               <div class="d-flex">
-                <span jhiTranslate="ctrlProdNewApp.articulo.recetaArt">Receta Art</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="unidadGenerarArt">
-              <div class="d-flex">
-                <span jhiTranslate="ctrlProdNewApp.articulo.unidadGenerarArt">Unidad Generar Art</span>
+                <span jhiTranslate="ctrlProdNewApp.articulo.naturalezaArt">Naturaleza</span>
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
             <th scope="col" jhiSortBy="mermaPreparacionArt">
-              <div class="d-flex">
+              <div class="d-flex justify-content-end text-end">
                 <span jhiTranslate="ctrlProdNewApp.articulo.mermaPreparacionArt">Merma Preparacion Art</span>
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
             <th scope="col" jhiSortBy="pesoArt">
-              <div class="d-flex">
+              <div class="d-flex justify-content-end text-end">
                 <span jhiTranslate="ctrlProdNewApp.articulo.pesoArt">Peso Art</span>
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
             <th scope="col" jhiSortBy="presentacionCompraArt">
-              <div class="d-flex">
+              <div class="d-flex justify-content-end text-end">
                 <span jhiTranslate="ctrlProdNewApp.articulo.presentacionCompraArt">Presentacion Compra Art</span>
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
             <th scope="col" jhiSortBy="valorPresentacionArt">
-              <div class="d-flex">
+              <div class="d-flex justify-content-end text-end">
                 <span jhiTranslate="ctrlProdNewApp.articulo.valorPresentacionArt">Valor Presentacion Art</span>
                 <fa-icon class="p-1" icon="sort" />
               </div>
@@ -119,12 +132,11 @@
                 <a [routerLink]="['/articulo', articulo.id, 'view']">{{ articulo.descArt }}</a>
               </td>
 
-              <td>{{ articulo.recetaArt }}</td>
-              <td>{{ articulo.unidadGenerarArt }}</td>
-              <td>{{ articulo.mermaPreparacionArt }}</td>
-              <td>{{ articulo.pesoArt }}</td>
-              <td>{{ articulo.presentacionCompraArt }}</td>
-              <td>{{ articulo.valorPresentacionArt }}</td>
+              <td>{{ articulo.naturalezaArt }}</td>
+              <td class="text-end">{{ articulo.mermaPreparacionArt }}</td>
+              <td class="text-end">{{ articulo.pesoArt }}</td>
+              <td class="text-end">{{ articulo.presentacionCompraArt }}</td>
+              <td class="text-end">{{ articulo.valorPresentacionArt }}</td>
               <td>
                 @if (articulo.unidadPresentacionArt) {
                   <div>

@@ -24,14 +24,19 @@
   <form [formGroup]="searchForm" (ngSubmit)="$event.preventDefault()" class="d-flex align-items-end mb-3">
     <div class="flex-grow-1">
       <label for="tipo-articulo-search" jhiTranslate="ctrlProdNewApp.tipoArticulo.search.label"></label>
-      <div class="input-group">
+      <div class="input-group search-field">
         <span class="input-group-text"><fa-icon icon="search" /></span>
-        <input id="tipo-articulo-search" type="search" class="form-control" formControlName="search" />
-        @if (searchForm.controls.search.value) {
-          <button type="button" class="btn btn-outline-secondary" (click)="clearSearch()">
-            <fa-icon icon="times" /><span class="visually-hidden" jhiTranslate="ctrlProdNewApp.tipoArticulo.search.clear"></span>
-          </button>
-        }
+        <div class="search-field-input">
+          <input id="tipo-articulo-search" type="search" class="form-control" formControlName="search" />
+          @if (searchForm.controls.search.value) {
+            <button type="button" class="search-field-clear" (click)="clearSearch()">
+              <fa-icon icon="times" class="search-field-clear-icon" /><span
+                class="visually-hidden"
+                jhiTranslate="ctrlProdNewApp.tipoArticulo.search.clear"
+              ></span>
+            </button>
+          }
+        </div>
       </div>
     </div>
     <button type="button" class="btn btn-secondary ms-3" (click)="clearFilters()">

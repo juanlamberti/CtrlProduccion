@@ -1,30 +1,32 @@
 <div class="position-relative" (focusout)="blur($event)">
-  <div class="input-group">
+  <div class="input-group search-field">
     <span class="input-group-text"><fa-icon icon="search" /></span>
-    <input
-      type="text"
-      class="form-control"
-      role="combobox"
-      autocomplete="off"
-      aria-autocomplete="list"
-      [id]="inputId()"
-      [value]="text()"
-      [disabled]="disabled()"
-      [placeholder]="entityKey + '.lookup.placeholder' | translate"
-      [attr.aria-label]="entityKey + '.lookup.label' | translate"
-      [attr.aria-expanded]="opened()"
-      [attr.aria-controls]="inputId() + '-options'"
-      [attr.aria-activedescendant]="activeIndex() >= 0 && opened() ? inputId() + '-option-' + activeIndex() : null"
-      (focus)="focus()"
-      (beforeinput)="beforeInput($event)"
-      (input)="search($event)"
-      (keydown)="keydown($event)"
-    />
-    @if (text()) {
-      <button type="button" class="btn btn-outline-secondary" [disabled]="disabled()" (click)="clear()">
-        <fa-icon icon="times" /><span class="visually-hidden" jhiTranslate="global.lookup.clear"></span>
-      </button>
-    }
+    <div class="search-field-input">
+      <input
+        type="text"
+        class="form-control"
+        role="combobox"
+        autocomplete="off"
+        aria-autocomplete="list"
+        [id]="inputId()"
+        [value]="text()"
+        [disabled]="disabled()"
+        [placeholder]="entityKey + '.lookup.placeholder' | translate"
+        [attr.aria-label]="entityKey + '.lookup.label' | translate"
+        [attr.aria-expanded]="opened()"
+        [attr.aria-controls]="inputId() + '-options'"
+        [attr.aria-activedescendant]="activeIndex() >= 0 && opened() ? inputId() + '-option-' + activeIndex() : null"
+        (focus)="focus()"
+        (beforeinput)="beforeInput($event)"
+        (input)="search($event)"
+        (keydown)="keydown($event)"
+      />
+      @if (text()) {
+        <button type="button" class="search-field-clear" [disabled]="disabled()" (click)="clear()">
+          <fa-icon icon="times-circle" class="search-field-clear-icon" /><span class="visually-hidden" jhiTranslate="global.lookup.clear"></span>
+        </button>
+      }
+    </div>
     @if (allowCreate() && !disabled()) {
       <a class="btn btn-outline-primary" [routerLink]="['/' + routePath, 'new']" target="_blank" rel="noopener">
         <fa-icon icon="plus" />&nbsp;<span [jhiTranslate]="entityKey + '.lookup.create'"></span>

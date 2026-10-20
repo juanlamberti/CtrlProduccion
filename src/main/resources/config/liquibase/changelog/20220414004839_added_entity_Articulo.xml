@@ -10,6 +10,7 @@
         Added the entity Articulo.
     -->
     <changeSet id="20220414004839-1" author="jhipster">
+        <validCheckSum>1:any</validCheckSum>
         <createTable tableName="articulo">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
@@ -41,6 +42,9 @@
             <column name="tipo_art_id" type="bigint">
                 <constraints nullable="false" />
             </column>
+            <column name="naturaleza_art" type="varchar(20)" defaultValue="SIMPLE">
+                <constraints nullable="false"/>
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>
@@ -62,6 +66,17 @@
             <column name="last_modified_by" type="varchar(50)"/>
             <column name="last_modified_date" type="timestamp"/>
             <column name="status" type="varchar(50)" defaultValue="ACTIVE">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20220414003934-articulo-naturaleza" author="codex">
+        <preConditions onFail="MARK_RAN">
+            <not><columnExists tableName="articulo" columnName="naturaleza_art"/></not>
+        </preConditions>
+        <addColumn tableName="articulo">
+            <column name="naturaleza_art" type="varchar(20)" defaultValue="SIMPLE">
                 <constraints nullable="false"/>
             </column>
         </addColumn>

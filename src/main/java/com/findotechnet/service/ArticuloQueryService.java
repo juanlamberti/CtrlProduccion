@@ -1,7 +1,6 @@
 package com.findotechnet.service;
 
 import com.findotechnet.domain.*; // for static metamodels
-import com.findotechnet.domain.Articulo;
 import com.findotechnet.repository.ArticuloRepository;
 import com.findotechnet.service.criteria.ArticuloCriteria;
 import jakarta.persistence.criteria.JoinType;
@@ -90,6 +89,23 @@ public class ArticuloQueryService extends QueryService<Articulo> {
                     buildSpecification(criteria.getTipoArtId(), root -> root.join(Articulo_.tipoArt, JoinType.LEFT).get(TipoArticulo_.id))
                 )
             );
+            if (criteria.getInsumoId() != null) {
+                specification = specification.and((root, query, builder) -> {
+                    var children = query.subquery(Long.class);
+                    var ingrediente = children.from(Ingrediente.class);
+                    children.select(ingrediente.get(Ingrediente_.id));
+                    children.where(
+                        builder.equal(ingrediente.get(Ingrediente_.articulo).get(Articulo_.id), root.get(Articulo_.id)),
+                        builder.equal(ingrediente.get(Ingrediente_.insumo).get(Articulo_.id), criteria.getInsumoId())
+                    );
+                    return builder.exists(children);
+                });
+            }
+            if (criteria.getNaturalezaArt() != null) {
+                specification = specification.and((root, query, builder) ->
+                    builder.equal(root.get(Articulo_.naturalezaArt), criteria.getNaturalezaArt())
+                );
+            }
         }
         return specification;
     }

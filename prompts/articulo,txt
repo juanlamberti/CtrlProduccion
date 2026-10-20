@@ -1,0 +1,22 @@
+ignorar lineas que comiencen con caracteres que representen comentarios en distintos lenguajes, ejemplo #, --, //, etc
+
+# creacion
+agrega un radio button en el componetne articulo-update con 2 items, receta o ingrediente
+que este al inicio de los campos 
+al seleccionar receta muestra los campos base para una receta
+  descArt?: string | null;
+  mermaPreparacionArt?: number | null;
+  pesoArt?: number | null;
+  unidadPresentacionArt?: IUnidad | null;
+  tipoArt?: ITipoArticulo | null;
+
+al seleccionar ingrediente muestra los campos base para un insumo
+  descArt?: string | null;
+  presentacionCompraArt?: number | null;
+  valorPresentacionArt?: number | null;
+  unidadPresentacionArt?: IUnidad | null;
+  tipoArt --> por ahora buscar INSUMO o ARTICULO si no existe
+
+cuando se lo llame desde el componete home heredar el seteo de radiobutton
+
+si se selecciono una receta al grabar mostrar los ingredientes, si se graba un insumo navegar a home nuevamente

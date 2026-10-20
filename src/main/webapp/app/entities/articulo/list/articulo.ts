@@ -1,3 +1,4 @@
+import { ArticuloLookup } from '../lookup/articulo-lookup';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { EntityIcon } from 'app/shared/entity-icon';
 import { HttpHeaders } from '@angular/common/http';
@@ -16,6 +17,7 @@ import { Filter, FilterOptions, IFilterOption, IFilterOptions } from 'app/shared
 import { TranslateDirective } from 'app/shared/language';
 import { ItemCount } from 'app/shared/pagination';
 import { SortByDirective, SortDirective, SortService, type SortState, sortStateSignal } from 'app/shared/sort';
+import { NaturalezaArticulo } from 'app/entities/enumerations/naturaleza-articulo.model';
 import { IArticulo } from '../articulo.model';
 import { ArticuloDeleteDialog } from '../delete/articulo-delete-dialog';
 import { ArticuloService } from '../service/articulo.service';
@@ -24,6 +26,7 @@ import { ArticuloService } from '../service/articulo.service';
   selector: 'jhi-articulo',
   templateUrl: './articulo.html',
   imports: [
+    ArticuloLookup,
     ReactiveFormsModule,
     EntityIcon,
     RouterLink,
@@ -50,6 +53,8 @@ export class Articulo {
 
   readonly searchForm = new FormGroup({
     search: new FormControl('', { nonNullable: true }),
+    naturaleza: new FormControl<NaturalezaArticulo | null>(null),
+    insumo: new FormControl<IArticulo | null>(null),
   });
 
   readonly router = inject(Router);
@@ -68,6 +73,11 @@ export class Articulo {
   protected modalService = inject(NgbModal);
 
   constructor() {
+    this.searchForm.valueChanges.pipe(takeUntilDestroyed()).subscribe(() => {
+      this.page.set(1);
+      this.load();
+      this.handleNavigation(1, this.sortState(), this.filters.filterOptions);
+    });
     this.searchForm.controls.search.setValue(this.articuloService.searchTerm, { emitEvent: false });
     this.searchForm.controls.search.valueChanges
       .pipe(
@@ -133,6 +143,10 @@ export class Articulo {
   }
 
   clearFilters(): void {
+    this.searchForm.reset(
+      { naturaleza: this.activatedRouteState().data['recipe'] === true ? NaturalezaArticulo.COMPUESTO : null, insumo: null },
+      { emitEvent: false },
+    );
     this.searchForm.controls.search.setValue('', { emitEvent: false });
     this.articuloService.searchTerm = '';
     this.filters.clear();
@@ -154,6 +168,25 @@ export class Articulo {
   }
 
   protected fillComponentAttributeFromRoute(params: ParamMap, data: Data): void {
+    const recipe = data['recipe'] === true;
+    const nature = params.get('naturalezaArt');
+    const insumoId = Number(params.get('insumoId'));
+    this.searchForm.reset(
+      {
+        naturaleza: recipe
+          ? NaturalezaArticulo.COMPUESTO
+          : nature === NaturalezaArticulo.SIMPLE || nature === NaturalezaArticulo.COMPUESTO
+            ? nature
+            : null,
+        insumo: Number.isSafeInteger(insumoId) && insumoId > 0 ? { id: insumoId, descArt: params.get('insumoDescripcion') } : null,
+      },
+      { emitEvent: false },
+    );
+    if (recipe) {
+      this.searchForm.controls.naturaleza.disable({ emitEvent: false });
+    } else {
+      this.searchForm.controls.naturaleza.enable({ emitEvent: false });
+    }
     const page = params.get(PAGE_HEADER);
     this.page.set(+(page ?? 1));
     this.sortState.set(this.sortService.parseSortParam(params.get(SORT) ?? data[DEFAULT_SORT_DATA]));
@@ -179,6 +212,16 @@ export class Articulo {
     for (const filterOption of this.filters.filterOptions) {
       queryObject[filterOption.name] = filterOption.values;
     }
+    if (this.activatedRouteState().data['recipe'] === true) {
+      queryObject.naturalezaArt = NaturalezaArticulo.COMPUESTO;
+    }
+    const selection = this.searchForm.getRawValue();
+    if (selection.naturaleza) {
+      queryObject.naturalezaArt = selection.naturaleza;
+    }
+    if (selection.insumo) {
+      queryObject.insumoId = selection.insumo.id;
+    }
     this.articuloService.search(queryObject);
   }
 
@@ -195,6 +238,10 @@ export class Articulo {
       }
     }
 
+    const selection = this.searchForm.getRawValue();
+    queryParamsObj.naturalezaArt = selection.naturaleza;
+    queryParamsObj.insumoId = selection.insumo?.id;
+    queryParamsObj.insumoDescripcion = selection.insumo?.descArt;
     this.router.navigate(['./'], {
       relativeTo: this.activatedRoute,
       queryParams: queryParamsObj,

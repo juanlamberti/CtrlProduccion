@@ -35,6 +35,11 @@
         "label": "Seleccionar artículo",
         "placeholder": "Buscar artículo",
         "create": "Crear artículo"
+      },
+      "naturalezaArt": "Naturaleza",
+      "filters": {
+        "all": "Todas",
+        "insumo": "Contiene el insumo"
       }
     }
   }

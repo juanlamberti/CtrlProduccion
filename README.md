@@ -117,7 +117,12 @@ To build the final jar and optimize the CtrlProdNew application for production, 
 ```
 
 This will concatenate and minify the client CSS and JavaScript files. It will also modify `index.html` so it references these new files.
-To ensure everything worked, run:
+The production JWT signing key is configured in `src/main/resources/config/application-prod.yml`
+under `jhipster.security.authentication.jwt.base64-secret` and is included in the packaged JAR.
+Keep it stable across deployments: changing it invalidates existing login tokens.
+You can override it with `JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET` when needed.
+
+To start the application:
 
 ```bash
 java -jar target/*.jar

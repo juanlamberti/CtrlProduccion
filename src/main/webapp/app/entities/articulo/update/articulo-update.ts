@@ -6,7 +6,7 @@ import { EntityIcon } from 'app/shared/entity-icon';
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Observable, finalize, map } from 'rxjs';
@@ -17,6 +17,7 @@ import { UnidadService } from 'app/entities/unidad/service/unidad.service';
 import { IUnidad } from 'app/entities/unidad/unidad.model';
 import { AlertError } from 'app/shared/alert';
 import { TranslateDirective } from 'app/shared/language';
+import { NaturalezaArticulo } from 'app/entities/enumerations/naturaleza-articulo.model';
 import { IArticulo } from '../articulo.model';
 import { ArticuloService } from '../service/articulo.service';
 
@@ -52,6 +53,7 @@ export class ArticuloUpdate implements OnInit {
   protected unidadService = inject(UnidadService);
   protected tipoArticuloService = inject(TipoArticuloService);
   protected activatedRoute = inject(ActivatedRoute);
+  protected router = inject(Router);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: ArticuloFormGroup = this.articuloFormService.createArticuloFormGroup();
@@ -63,7 +65,7 @@ export class ArticuloUpdate implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ articulo, ingredient }) => {
-      this.isIngredient = ingredient === true;
+      this.isIngredient = ingredient === true || articulo?.naturalezaArt === NaturalezaArticulo.SIMPLE;
       this.articulo = articulo;
       if (!this.isIngredient && !articulo) {
         this.editForm.patchValue({ pesoArt: 0, valorPresentacionArt: 0 });
@@ -71,11 +73,40 @@ export class ArticuloUpdate implements OnInit {
       if (articulo) {
         this.updateForm(articulo);
       }
+      if (this.isIngredient) {
+        this.setIngredientMode(true);
+      }
     });
   }
 
+  setIngredientMode(isIngredient: boolean): void {
+    this.isIngredient = isIngredient;
+    this.totals.set(null);
+    this.totalsError.set(false);
+    if (isIngredient && !this.articulo) {
+      this.tipoArticuloService.query({ 'descTpArt.equals': 'INSUMO' }).subscribe(response => {
+        if (!this.isIngredient) return;
+        const insumo = response.body?.find(tipo => tipo.descTpArt?.trim().toUpperCase() === 'INSUMO');
+        if (insumo) {
+          this.editForm.patchValue({ tipoArt: insumo });
+        } else {
+          this.tipoArticuloService.query({ 'descTpArt.equals': 'ARTICULO' }).subscribe(fallback => {
+            if (this.isIngredient) {
+              this.editForm.patchValue({
+                tipoArt: fallback.body?.find(tipo => tipo.descTpArt?.trim().toUpperCase() === 'ARTICULO') ?? null,
+              });
+            }
+          });
+        }
+      });
+    } else {
+      this.editForm.patchValue({ tipoArt: this.articulo?.tipoArt ?? null });
+      this.loadTotals();
+    }
+  }
+
   loadTotals(): void {
-    if (this.isIngredient || !this.articulo?.id) {
+    if (!this.articulo?.id) {
       return;
     }
     this.totals.set(null);
@@ -83,7 +114,9 @@ export class ArticuloUpdate implements OnInit {
     this.articuloService.totals(this.articulo.id).subscribe({
       next: totals => {
         this.totals.set(totals);
-        this.editForm.patchValue({ pesoArt: totals.pesoArt, valorPresentacionArt: totals.valorPresentacionArt });
+        if (!this.isIngredient) {
+          this.editForm.patchValue({ pesoArt: totals.pesoArt, valorPresentacionArt: totals.valorPresentacionArt });
+        }
       },
       error: () => this.totalsError.set(true),
     });
@@ -117,7 +150,7 @@ export class ArticuloUpdate implements OnInit {
   }
 
   protected onSaveSuccess(): void {
-    this.previousState();
+    void this.router.navigate(['/']);
   }
 
   protected onSaveError(): void {
@@ -130,7 +163,7 @@ export class ArticuloUpdate implements OnInit {
 
   protected updateForm(articulo: IArticulo): void {
     this.articulo = articulo;
-    this.articuloFormService.resetForm(this.editForm, articulo, this.isIngredient);
+    this.articuloFormService.resetForm(this.editForm, articulo);
     this.loadTotals();
 
     this.unidadsSharedCollection.update(unidads =>

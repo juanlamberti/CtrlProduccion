@@ -72,6 +72,82 @@ Generic styles
   background-color: #fff;
 }
 
+// Customize these variables globally or override them on a specific .search-field.
+:root {
+  --search-prefix-bg: #{$primary};
+  --search-prefix-color: #fff;
+  --search-clear-color: #666;
+}
+
+.search-field {
+  > .input-group-text {
+    background-color: var(--search-prefix-bg);
+    color: var(--search-prefix-color);
+  }
+
+  > .search-field-input {
+    position: relative;
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+
+    > .form-control {
+      width: 100%;
+      padding-right: 2.5rem;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+
+      &::-webkit-search-cancel-button,
+      &::-webkit-search-decoration {
+        -webkit-appearance: none;
+      }
+    }
+
+    &:not(:last-child) > .form-control {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    &:focus-within {
+      z-index: 3;
+    }
+  }
+
+  .search-field-clear {
+    position: absolute;
+    top: 50%;
+    right: 0.5rem;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--search-clear-color);
+
+    &:focus-visible {
+      outline: 2px solid var(--search-prefix-bg);
+      outline-offset: 1px;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+    }
+  }
+
+  .search-field-clear-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1rem;
+    height: 1rem;
+    font-size: 0.65rem;
+  }
+}
+
 .readonly {
   background-color: #eee;
   opacity: 1;

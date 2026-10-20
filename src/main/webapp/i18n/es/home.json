@@ -3,6 +3,7 @@
     "title": "¡Bienvenido, al sistema de recetas de \"La Cocina de Ingrid\"!",
     "subtitle": "Esta es su página de inicio",
     "actions": {
+      "recipes": "Recetas",
       "createRecipe": "Crear receta",
       "createIngredient": "Crear ingrediente"
     },

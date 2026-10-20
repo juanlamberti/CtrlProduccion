@@ -81,16 +81,12 @@ export class ArticuloFormService {
     return form.getRawValue();
   }
 
-  resetForm(form: ArticuloFormGroup, articulo: ArticuloFormGroupInput, isIngredient: boolean): void {
+  resetForm(form: ArticuloFormGroup, articulo: ArticuloFormGroupInput): void {
     const articuloRawValue = { ...this.getFormDefaults(), ...articulo };
     form.reset({
       ...articuloRawValue,
       id: { value: articuloRawValue.id, disabled: true },
     });
-    if (isIngredient) {
-      form.get('presentacionCompraArt')?.setValue(0);
-      form.get('valorPresentacionArt')?.setValue(0);
-    }
   }
 
   private getFormDefaults(): ArticuloFormDefaults {

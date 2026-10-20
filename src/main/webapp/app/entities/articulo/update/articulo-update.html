@@ -34,6 +34,37 @@
           }
         }
 
+        <div class="mb-3">
+          <span jhiTranslate="ctrlProdNewApp.articulo.naturalezaArt">Naturaleza</span>:
+          <strong>{{ totals()?.naturalezaArt ?? articulo?.naturalezaArt ?? 'SIMPLE' }}</strong>
+        </div>
+
+        <fieldset class="mb-3">
+          <legend class="fs-6">Datos a cargar</legend>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="articleMode"
+              id="mode_recipe"
+              [checked]="!isIngredient"
+              (change)="setIngredientMode(false)"
+            />
+            <label class="form-check-label" for="mode_recipe">Elaboración</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="articleMode"
+              id="mode_ingredient"
+              [checked]="isIngredient"
+              (change)="setIngredientMode(true)"
+            />
+            <label class="form-check-label" for="mode_ingredient">Compra</label>
+          </div>
+        </fieldset>
+
         @let descArtRef = editForm.get('descArt')!;
         <div class="mb-3">
           <label class="form-label" for="field_descArt" jhiTranslate="ctrlProdNewApp.articulo.descArt">Desc Art</label>
@@ -53,51 +84,7 @@
         </div>
 
         @if (!isIngredient) {
-          @let recetaArtRef = editForm.get('recetaArt')!;
-          <div class="mb-3">
-            <label class="form-label" for="field_recetaArt" jhiTranslate="ctrlProdNewApp.articulo.recetaArt">Receta Art</label>
-            <input type="text" class="form-control" name="recetaArt" id="field_recetaArt" data-cy="recetaArt" formControlName="recetaArt" />
-            @if (recetaArtRef.invalid && (recetaArtRef.dirty || recetaArtRef.touched)) {
-              <div>
-                @if (recetaArtRef.errors?.maxlength) {
-                  <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '65000' }"
-                    >Este campo no puede superar más de 65000 caracteres.</small
-                  >
-                }
-              </div>
-            }
-          </div>
-
           <div class="row">
-            <div class="col">
-              @let unidadGenerarArtRef = editForm.get('unidadGenerarArt')!;
-              <div class="mb-3">
-                <label class="form-label" for="field_unidadGenerarArt" jhiTranslate="ctrlProdNewApp.articulo.unidadGenerarArt"
-                  >Unidad Generar Art</label
-                >
-                <input
-                  type="number"
-                  class="form-control"
-                  name="unidadGenerarArt"
-                  id="field_unidadGenerarArt"
-                  data-cy="unidadGenerarArt"
-                  formControlName="unidadGenerarArt"
-                />
-                @if (unidadGenerarArtRef.invalid && (unidadGenerarArtRef.dirty || unidadGenerarArtRef.touched)) {
-                  <div>
-                    @if (unidadGenerarArtRef.errors?.min) {
-                      <small class="form-text text-danger" jhiTranslate="entity.validation.min" [translateValues]="{ min: '0' }"
-                        >Este campo debe ser mayor que 0.</small
-                      >
-                    }
-                    <small class="form-text text-danger" [hidden]="!unidadGenerarArtRef.errors?.number" jhiTranslate="entity.validation.number"
-                      >Este campo debe ser un número.</small
-                    >
-                  </div>
-                }
-              </div>
-            </div>
-
             <div class="col">
               @let mermaPreparacionArtRef = editForm.get('mermaPreparacionArt')!;
               <div class="col-mb-3">
@@ -183,19 +170,21 @@
               </div>
             }
           </div>
-          <div class="col-md-6">
-            <div class="mb-3">
-              <label class="form-label" for="field_tipoArt" jhiTranslate="ctrlProdNewApp.articulo.tipoArt">Tipo Art</label>
-              <jhi-tipo-articulo-lookup inputId="field_tipoArt" data-cy="tipoArt" formControlName="tipoArt" />
-            </div>
-            @if (editForm.get(['tipoArt'])!.invalid && (editForm.get(['tipoArt'])!.dirty || editForm.get(['tipoArt'])!.touched)) {
-              <div>
-                @if (editForm.get(['tipoArt'])?.errors?.required) {
-                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
-                }
+          @if (!isIngredient) {
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label" for="field_tipoArt" jhiTranslate="ctrlProdNewApp.articulo.tipoArt">Tipo Art</label>
+                <jhi-tipo-articulo-lookup inputId="field_tipoArt" data-cy="tipoArt" formControlName="tipoArt" />
               </div>
-            }
-          </div>
+              @if (editForm.get(['tipoArt'])!.invalid && (editForm.get(['tipoArt'])!.dirty || editForm.get(['tipoArt'])!.touched)) {
+                <div>
+                  @if (editForm.get(['tipoArt'])?.errors?.required) {
+                    <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+                  }
+                </div>
+              }
+            </div>
+          }
         </div>
 
         @if (isIngredient) {
@@ -290,7 +279,7 @@
       </div>
     </form>
   </div>
-  @if (!isIngredient && articulo?.id) {
+  @if (articulo?.id) {
     <aside class="col">
       <jhi-ingrediente [parentArticulo]="articulo!" (changed)="loadTotals()" />
     </aside>

@@ -45,6 +45,12 @@
       "fieldType": "BigDecimal",
       "fieldValidateRules": ["required", "min"],
       "fieldValidateRulesMin": 0
+    },
+    {
+      "fieldName": "naturalezaArt",
+      "fieldType": "NaturalezaArticulo",
+      "fieldValues": "SIMPLE,COMPUESTO",
+      "fieldValidateRules": ["required"]
     }
   ],
   "jpaMetamodelFiltering": true,

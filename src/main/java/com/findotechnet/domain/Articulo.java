@@ -1,5 +1,7 @@
 package com.findotechnet.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.findotechnet.domain.enumeration.NaturalezaArticulo;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serial;
@@ -60,6 +62,11 @@ public class Articulo extends AbstractAuditingEntity<Long> {
     @ManyToOne(optional = false)
     @NotNull
     private TipoArticulo tipoArt;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "naturaleza_art", nullable = false)
+    private NaturalezaArticulo naturalezaArt = NaturalezaArticulo.SIMPLE;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -191,6 +198,19 @@ public class Articulo extends AbstractAuditingEntity<Long> {
     public Articulo tipoArt(TipoArticulo tipoArticulo) {
         this.setTipoArt(tipoArticulo);
         return this;
+    }
+
+    public NaturalezaArticulo getNaturalezaArt() {
+        return naturalezaArt;
+    }
+
+    public Articulo maturalezaArt(NaturalezaArticulo naturalezaArt) {
+        this.naturalezaArt = naturalezaArt;
+        return this;
+    }
+
+    public void setNaturalezaArt(NaturalezaArticulo naturalezaArt) {
+        this.naturalezaArt = naturalezaArt;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

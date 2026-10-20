@@ -7,6 +7,15 @@ import ArticuloResolve from './route/articulo-routing-resolve.service';
 
 const articuloRoute: Routes = [
   {
+    path: 'recetas',
+    loadComponent: () => import('./list/articulo').then(m => m.Articulo),
+    data: {
+      recipe: true,
+      defaultSort: `descArt,${ASC}`,
+    },
+    canActivate: [userRouteAccessService],
+  },
+  {
     path: 'new/ingrediente',
     loadComponent: () => import('./update/articulo-update').then(m => m.ArticuloUpdate),
     resolve: {
@@ -19,7 +28,7 @@ const articuloRoute: Routes = [
     path: '',
     loadComponent: () => import('./list/articulo').then(m => m.Articulo),
     data: {
-      defaultSort: `id,${ASC}`,
+      defaultSort: `descArt,${ASC}`,
     },
     canActivate: [userRouteAccessService],
   },

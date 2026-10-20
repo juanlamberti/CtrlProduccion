@@ -1,5 +1,6 @@
 package com.findotechnet.service.criteria;
 
+import com.findotechnet.domain.enumeration.NaturalezaArticulo;
 import java.io.Serial;
 import java.util.Objects;
 import java.util.Optional;
@@ -42,6 +43,10 @@ public class ArticuloCriteria extends AbstractCriteria {
 
     private LongFilter tipoArtId;
 
+    private NaturalezaArticulo naturalezaArt;
+
+    private Long insumoId;
+
     private Boolean distinct;
 
     public ArticuloCriteria() {}
@@ -58,6 +63,8 @@ public class ArticuloCriteria extends AbstractCriteria {
         this.valorPresentacionArt = other.optionalValorPresentacionArt().map(BigDecimalFilter::copy).orElse(null);
         this.unidadPresentacionArtId = other.optionalUnidadPresentacionArtId().map(LongFilter::copy).orElse(null);
         this.tipoArtId = other.optionalTipoArtId().map(LongFilter::copy).orElse(null);
+        this.naturalezaArt = other.naturalezaArt;
+        this.insumoId = other.insumoId;
         this.distinct = other.distinct;
     }
 
@@ -256,6 +263,22 @@ public class ArticuloCriteria extends AbstractCriteria {
         this.tipoArtId = tipoArtId;
     }
 
+    public Long getInsumoId() {
+        return insumoId;
+    }
+
+    public void setInsumoId(Long insumoId) {
+        this.insumoId = insumoId;
+    }
+
+    public NaturalezaArticulo getNaturalezaArt() {
+        return naturalezaArt;
+    }
+
+    public void setNaturalezaArt(NaturalezaArticulo naturalezaArt) {
+        this.naturalezaArt = naturalezaArt;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -298,6 +321,8 @@ public class ArticuloCriteria extends AbstractCriteria {
             Objects.equals(valorPresentacionArt, that.valorPresentacionArt) &&
             Objects.equals(unidadPresentacionArtId, that.unidadPresentacionArtId) &&
             Objects.equals(tipoArtId, that.tipoArtId) &&
+            Objects.equals(naturalezaArt, that.naturalezaArt) &&
+            Objects.equals(insumoId, that.insumoId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -316,6 +341,8 @@ public class ArticuloCriteria extends AbstractCriteria {
             valorPresentacionArt,
             unidadPresentacionArtId,
             tipoArtId,
+            naturalezaArt,
+            insumoId,
             distinct
         );
     }
@@ -324,6 +351,8 @@ public class ArticuloCriteria extends AbstractCriteria {
     @Override
     public String toString() {
         return "ArticuloCriteria{" +
+            "naturalezaArt=" + naturalezaArt + ", " +
+            "insumoId=" + insumoId + ", " +
             optionalId().map(f -> "id=" + f + ", ").orElse("") +
             optionalDescArt().map(f -> "descArt=" + f + ", ").orElse("") +
             optionalRecetaArt().map(f -> "recetaArt=" + f + ", ").orElse("") +

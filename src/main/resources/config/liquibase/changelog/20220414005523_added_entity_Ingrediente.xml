@@ -49,4 +49,7 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="20261020-clasificar-articulos" author="codex">
+        <sql>UPDATE articulo SET naturaleza_art = CASE WHEN EXISTS (SELECT 1 FROM ingrediente i WHERE i.articulo_id = articulo.id) THEN 'COMPUESTO' ELSE 'SIMPLE' END</sql>
+    </changeSet>
 </databaseChangeLog>
